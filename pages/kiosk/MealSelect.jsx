@@ -1,12 +1,17 @@
 import React from 'react'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
+import 'tailwindcss/tailwind.css'
 import { motion } from 'framer-motion'
 import {
   NavLink,
+  useLocation
 } from "react-router-dom";
 
 export const MealSelect = (props) => {
+  let location = useLocation()
+  console.log(location)
+  const item = location.itemProp.item
   return (
     <div className="pt-8 mt-11">
       <Typography variant="h3" color="initial">Would you like to make this a meal?</Typography>
@@ -27,7 +32,10 @@ export const MealSelect = (props) => {
     transition={{ duration: 1 }}>
         <Button variant="error" style={{backgroundColor: '#cd5c5c', color: '#FFFFFF'}}className="pt-8 shadow-md">
           <div className="p-11">
-            <NavLink to="/specialrequest">
+            <NavLink to={
+              {pathname:"/specialrequest",
+              itemProp: {item: [item]}
+          }}>
               <p>No, thank you! <br />
               <span className="font-extralight">A-la Carte: $TOTALPRICE</span>
               </p>

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Lunch from './menu/Lunch.jsx'
 import Breakfast from './menu/Breakfast.jsx'
+import Sides from './menu/Sides.jsx'
 
 export const Menu = () => {
    //change to useEffect?
