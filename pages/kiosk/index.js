@@ -31,45 +31,61 @@ const history = createMemoryHistory();
 export const CartContext = createContext()
 
 const App = () => {
-    const [dineIn, setDineIn] = useState(false)
-    const [cartItems, setCartItems] = useState([])
+  const [dineIn, setDineIn] = useState(false)
+  const [cartItems, setCartItems] = useState([])
+
   return (
     <div className="container">
-        <Head><link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      <Head>
+        <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
         />
-        </Head>
+      </Head>
+
       <Router history={history}>
         <div className={styles.App}>
+
           <Switch>
+
             <CartContext.Provider value ={{cartItems, setCartItems}}>
+
               <Route exact path="/">
                 <Splash dineIn={dineIn} setDineIn={setDineIn}/>
               </Route>
+
               <Route path="/menu">
                 <Menu/>
               </Route>
+
               <Route path="/mealselect">
                 <MealSelect />
               </Route>
+
               <Route path="/sideselection">
                 <SideSelection />
               </Route>
+
               <Route path="/paymentmode">
                 <PaymentMode />
               </Route>
+
               <Route path="/creditcardpayment">
                 <CreditCardPayment />
               </Route>
+
               <Route path="/specialrequest">
                 <SpecialRequest />
               </Route>
+
               <Route path="/cart">
                 <Cart />
               </Route>
+
             </CartContext.Provider>
+
           </Switch>
+          
         </div>
       </Router>
     </div>
