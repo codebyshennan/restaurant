@@ -6,6 +6,7 @@ import {
   Router,
   Switch
 } from "react-router-dom";
+import styles from '../../components/App.module.css'
 import Splash from './Splash.jsx'
 import Lunch from './menu/Lunch.jsx';
 import Hero from './Hero.jsx'
@@ -21,6 +22,8 @@ import Cart from './Cart.jsx'
 import Menu from './Menu.jsx'
 import SideSelection from './menu/SideSelection.jsx';
 import {createMemoryHistory} from 'history'
+import Head from 'next/head'
+
 
 const history = createMemoryHistory();
 
@@ -30,12 +33,15 @@ export const CartContext = createContext()
 const App = () => {
     const [dineIn, setDineIn] = useState(false)
     const [cartItems, setCartItems] = useState([])
-    console.log('here')
   return (
-    <>
+    <div className="container">
+        <Head><link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        />
+        </Head>
       <Router history={history}>
-        <div className="App">
-          <h1> TESTING </h1>
+        <div className={styles.App}>
           <Switch>
             <CartContext.Provider value ={{cartItems, setCartItems}}>
               <Route exact path="/">
@@ -66,7 +72,7 @@ const App = () => {
           </Switch>
         </div>
       </Router>
-    </>
+    </div>
   );
 }
 

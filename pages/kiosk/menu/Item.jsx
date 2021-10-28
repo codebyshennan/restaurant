@@ -17,12 +17,15 @@ function Item({item, isMain, id }) {
   return (
     <Card className={classes.root} elevation={5} variant="outlined">
       <CardActionArea to={isMain ? "/mealselect" : "/specialrequest"}>
-        <NavLink to={isMain ? "/mealselect" : "/specialrequest"}>
-          <CardMedia className={classes.media} image='' title={item.name} />
+        <NavLink to={{
+          pathname:isMain ? "/mealselect" : "/specialrequest",
+          itemProp: {item: item}
+      }}>
+          <CardMedia className={classes.media} image='' title={item.item_name} />
           <CardContent>
             <div className={classes.cardContent}>
               <Typography variant="h5">
-                {item.name}
+                {item.item_name}
               </Typography>
               <Typography variant="h5" >
                 {item.price}

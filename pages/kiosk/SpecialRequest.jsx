@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, Fragment} from 'react'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
@@ -7,6 +7,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { motion } from 'framer-motion'
 import {
   NavLink,
+  useLocation
 } from "react-router-dom";
 import {CartContext} from './index.js'
 
@@ -15,6 +16,41 @@ export const SpecialRequest = (props) => {
   // const handleAddCartItem = (itemAdded) => {
     
   // }
+  let location = useLocation()
+  console.log(location)
+const test = location.itemProp.item.map((item, index) => {
+		const data = Object.entries(item.add_ons).map(([key,value], i)=>{
+              		( <Fragment key={i} >
+			            <Grid container>
+                  		<Grid item xs={8}>
+                  		<div className="pr-5 py-5">
+                   	 		{key}
+                  		</div>
+                  	</Grid>
+
+                  	<Grid item xs={4}>
+                  		<div className="pt-5">
+                    			{value}
+                    		<p>
+                    			<RemoveIcon color="error"/>
+                    			<ControlPointIcon color="success"/>
+                    		</p>
+                  		</div>
+                  	</Grid>
+                  </Grid>
+                  </Fragment>)}
+		)
+	return ( <Fragment key={index}>
+              <Grid item xs >
+              IMAGE GOES HERE
+              <div className="mt-8 shadow-lg h-96 rounded-3xl">
+            	{data}
+              </div>
+            </Grid>
+            </Fragment>)
+	})
+
+
   return (
     <div className="pt-8 mt-11">
       <Typography variant="h3" color="initial">Any Special Requests?</Typography>
@@ -25,48 +61,7 @@ export const SpecialRequest = (props) => {
   justifyContent="center"
   alignItems="center"
   spacing={3}>
-            {/* item.map.((item) =>) */}
-            <Grid item xs>
-              IMAGE GOES HERE
-              {/* Map out ingredients*/}
-              <div className="mt-8 shadow-lg h-96 rounded-3xl">
-                <Grid container>
-                  <Grid item xs={8}>
-                  <div className="pr-5 py-5">
-                    Lettuce
-                  </div>
-                  </Grid>
-                  <Grid item xs={4}>
-                  <div className="pt-5">
-                    1
-                    <p>
-                    <RemoveIcon color="error"/>
-                    <ControlPointIcon color="success"/>
-                    </p>
-                  </div>
-                  </Grid>
-                  {/* MORE INGREDIENTS */}
-                </Grid>
-              </div>
-            </Grid>
-            <Grid item xs>
-              IMAGE GOES HERE
-              {/* Map out ingredients*/}
-              <div className="mt-8 shadow-lg h-96 rounded-3xl">
-                  <div className="pr-5 py-5">
-                    Lettuce
-                  </div>
-              </div>
-            </Grid>
-            <Grid item xs>
-              IMAGE GOES HERE
-              {/* Map out ingredients*/}
-              <div className="mt-8 shadow-lg h-96 rounded-3xl">
-                  <div className="pr-5 py-5">
-                    Lettuce
-                  </div>
-              </div>
-            </Grid>
+          {test}
           </Grid>
         </div>
       </div>
