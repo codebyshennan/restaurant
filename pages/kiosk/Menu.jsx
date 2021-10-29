@@ -15,7 +15,7 @@ export const Menu = () => {
     <div>
       {currentHour() > 11 || currentHour() < 5 ? 
       <Lunch /> :
-      <Breakfast />
+      <Lunch />
       }
     </div>
   )

@@ -12,6 +12,7 @@ export const MealSelect = (props) => {
   let location = useLocation()
   console.log(location)
   const item = location.itemProp.item
+  
   return (
     <div className="pt-8 mt-11">
       <Typography variant="h3" color="initial">Would you like to make this a meal?</Typography>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
@@ -9,18 +9,19 @@ import { motion } from 'framer-motion'
 import {
   NavLink,
 } from "react-router-dom";
+import {CartContext} from './index.js'
 
 function Cart() {
-  return (
-    <div className="pt-8 mt-11">
-      <Typography variant="h3" color="initial">Please select your mode of payment</Typography>
-      <div className="m-12 border-2 p-8 border-opacity-100 font-bold rounded-2xl">
+  const {cartItems, setCartItems} = useContext(CartContext)
+  console.log(cartItems)
+  const itemData = cartItems.map((item, idx) => {return (
+      <div className="m-12 border-2 p-8 border-opacity-100 font-bold rounded-2xl" key={idx} >
         <Grid container spacing={2}>
           <Grid item xs={4}>
             IMAGE
           </Grid>
           <Grid item xs={4}>
-            TITLE <br />
+            {item.item_name} <br />
               <RemoveIcon color="error"/>
               1
               <ControlPointIcon color="success"/>
@@ -28,10 +29,17 @@ function Cart() {
           <Grid item xs={4}>
           <CloseIcon color="error"/>
           <br />
+          {/* allow them to update number of items */}
           AMOUNT
           </Grid>
         </Grid>
       </div>
+  )})
+  return (
+    <>
+    <div className="pt-8 mt-11">
+      <Typography variant="h3" color="initial">Please select your mode of payment</Typography>
+      {itemData}
       <div>
         <motion.div className="flex justify-between mx-64 my-16 font-semibold" initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
@@ -62,8 +70,22 @@ function Cart() {
         </div>
       </Button>
       </motion.div>
+      <motion.div className="mt-11" initial={{y: -50, opacity: 0}}
+            animate={{y: 0, opacity: 1 }} 
+            transition={{ duration: 2.5 }}>
+            
+            <NavLink to="/menu">
+              <Button variant="error" style={{backgroundColor: '#ff0000', color: '#FFFFFF'}} className="pt-8 shadow-md">
+                <div className="p-11">
+                    Cancel Item
+                </div>
+              </Button>
+            </NavLink>
+
+          </motion.div>
       </div>
     </div>
+    </>
   )
 }
 

@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 import mains from '../../../data/mains.js'
 
 function Lunch() {
+  console
   return (
     <div>
       <div>
