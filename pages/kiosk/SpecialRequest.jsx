@@ -20,9 +20,9 @@ export const SpecialRequest = (props) => {
   // }
 
   let location = useLocation()
+  console.log(location)
   const itemAddOns = location.itemProp.item[0].add_ons
   console.log(itemAddOns)
-
 
   const data = Object
                 .entries(itemAddOns)
