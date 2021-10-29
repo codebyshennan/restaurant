@@ -5,7 +5,7 @@ import {
   NavLink,
   Link
 } from "react-router-dom";
-import {CartContext} from '../index.js';
+import {CartContext} from '../../../pages/kiosk/index.js';
 
 // on click, set elevation to lower (1 or 0) and set innerBG color to gray
 function Item({item, isMain, id }) {

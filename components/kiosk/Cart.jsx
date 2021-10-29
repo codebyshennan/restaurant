@@ -9,7 +9,7 @@ import { motion } from 'framer-motion'
 import {
   NavLink,
 } from "react-router-dom";
-import {CartContext} from './index.js'
+import {CartContext} from '../../pages/kiosk/index.js'
 
 function Cart() {
   const {cartItems, setCartItems} = useContext(CartContext)

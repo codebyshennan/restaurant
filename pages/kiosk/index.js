@@ -7,22 +7,23 @@ import {
   Switch
 } from "react-router-dom";
 import styles from '../../components/App.module.css'
-import Splash from './Splash.jsx'
-import Lunch from './menu/Lunch.jsx';
-import Hero from './Hero.jsx'
+import Splash from '../../components/kiosk/Splash.jsx'
+import Lunch from '../../components/kiosk/menu/Lunch.jsx';
 import CardHeader from '@mui/material/CardHeader'
 import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
-import MealSelect from './MealSelect.jsx';
-import SidebarMenu from './SidebarMenu.jsx'
-import PaymentMode from './PaymentMode.jsx'
-import CreditCardPayment from './CreditCardPayment.jsx'
-import SpecialRequest from './SpecialRequest.jsx';
-import Cart from './Cart.jsx'
-import Menu from './Menu.jsx'
-import SideSelection from './menu/SideSelection.jsx';
+import MealSelect from '../../components/kiosk/MealSelect.jsx';
+import SidebarMenu from '../../components/kiosk/SidebarMenu.jsx'
+import PaymentMode from '../../components/kiosk/PaymentMode.jsx'
+import CreditCardPayment from '../../components/kiosk/CreditCardPayment.jsx'
+import SpecialRequest from '../../components/kiosk/SpecialRequest.jsx';
+import Cart from '../../components/kiosk/Cart.jsx'
+import Menu from '../../components/kiosk/Menu.jsx'
+import SideSelection from '../../components/kiosk/menu/SideSelection.jsx';
 import {createMemoryHistory} from 'history'
 import Head from 'next/head'
+import dbConnection from '../../lib/mongodb';
+import Item from '../../models/Item'
 
 
 const history = createMemoryHistory();
@@ -30,10 +31,11 @@ const history = createMemoryHistory();
 // do we need to export or can we just put it in app?
 export const CartContext = createContext()
 
-const App = () => {
+const App = ({result}) => {
   const [dineIn, setDineIn] = useState(false)
   const [cartItems, setCartItems] = useState([])
 
+  console.log(result)
   return (
     <div className="container">
       <Head>
@@ -91,5 +93,22 @@ const App = () => {
     </div>
   );
 }
+
+export const getServerSideProps = async() => {
+  await dbConnection()
+
+  const result = await Item.find({})
+  console.log(result)
+  
+
+
+  return { props: {
+                    result: JSON.parse(JSON.stringify(result))
+                  }
+                }
+
+}
+
+
 
 export default App;

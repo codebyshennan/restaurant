@@ -9,7 +9,7 @@ import {
   NavLink,
   useLocation
 } from "react-router-dom";
-import {CartContext} from './index.js'
+import {CartContext} from '../../pages/kiosk/index.js'
 import { ListItemSecondaryAction } from '@mui/material';
 import { LocalConvenienceStoreOutlined } from '@mui/icons-material';
 

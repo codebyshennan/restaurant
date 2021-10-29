@@ -15,9 +15,13 @@ function Lunch() {
           <SidebarMenu />
           <Grid container justify="center" spacing={4}>
             {mains.map((item) => (
-              <motion.div className="my-4 px-4 w-1/2 overflow-hidden" initial={{x: 300, opacity: 0}}
-    animate={{x: 0, opacity: 1 }} 
-    transition={{ duration: 1 }} key={item._id.$oid}>
+              <motion.div 
+                className="my-4 px-4 w-1/2 overflow-hidden" 
+                initial={{x: 300, opacity: 0}}
+                animate={{x: 0, opacity: 1 }} 
+                transition={{ duration: 1 }} 
+                key={item._id.$oid}
+              >
               <Grid item>
                 <Item item={item} id={item._id.$oid}
                 isMain={true}/>
