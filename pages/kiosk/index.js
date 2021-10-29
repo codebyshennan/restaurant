@@ -23,6 +23,8 @@ import Menu from './Menu.jsx'
 import SideSelection from './menu/SideSelection.jsx';
 import {createMemoryHistory} from 'history'
 import Head from 'next/head'
+import dbConnection from '../../lib/mongodb';
+import Item from '../../models/Item'
 
 
 const history = createMemoryHistory();
@@ -30,10 +32,11 @@ const history = createMemoryHistory();
 // do we need to export or can we just put it in app?
 export const CartContext = createContext()
 
-const App = () => {
+const App = ({result}) => {
   const [dineIn, setDineIn] = useState(false)
   const [cartItems, setCartItems] = useState([])
 
+  console.log(result)
   return (
     <div className="container">
       <Head>
@@ -91,5 +94,22 @@ const App = () => {
     </div>
   );
 }
+
+export const getServerSideProps = async() => {
+  await dbConnection()
+
+  const result = await Item.find({})
+  console.log(result)
+  
+
+
+  return { props: {
+                    result: JSON.parse(JSON.stringify(result))
+                  }
+                }
+
+}
+
+
 
 export default App;

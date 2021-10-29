@@ -11,3 +11,5 @@ const connectionTokenHandler = async (req,res) => {
     res.status(405).send('Invalid Request')
   }
 }
+
+export default connectionTokenHandler
