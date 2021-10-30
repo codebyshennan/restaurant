@@ -1,8 +1,10 @@
 import mongoose, { Schema } from 'mongoose'
 import ItemSchema from './Item'
 
-const MealSchema = new Schema({
-
+export const MealSchema = new Schema({
+  name: {
+    type: String,
+  },
   side: {
     type: String,
   },
@@ -26,4 +28,4 @@ const MealSchema = new Schema({
   }
 })
 
-export default mongoose.models.Meal || mongoose.model('Meal', MealSchema)
+// export default mongoose.models.Meal || mongoose.model('Meal', MealSchema)

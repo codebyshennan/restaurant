@@ -3,7 +3,7 @@ import { ItemSchema } from './Item'
 
 // orderSchema should correspond to a collection in the database
 
-const OrderSchema = new Schema({
+export const OrderSchema = new Schema({
 
 // TO BE ADDED AS A DB TRIGGER
 // https://www.mongodb.com/basics/mongodb-auto-increment
@@ -43,4 +43,4 @@ const OrderSchema = new Schema({
   }
 */
 
-export default mongoose.models.Order || mongoose.model('Order', OrderSchema)
+// export default mongoose.models.Order || mongoose.model('Order', OrderSchema)

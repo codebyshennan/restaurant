@@ -15,20 +15,21 @@ export const ItemSchema = new Schema({
   },
   type: {
     type: String,
+    enum: ['main','side','beverage','dessert']
   },
   image_url: {
     required: [true, "Please provide an image for this asset"],
     type: String
   },
-  price: {
+  price: [{
     size: {
       type: String,
-      enum: ['S','M','R','L']
+      enum: ['default','S','M','R','L']
     }, 
     price: {
       type: Number,
-    } 
-  },
+    }
+  }],
   ingredients: [{  
     name: {
       type: String,
@@ -51,4 +52,4 @@ export const ItemSchema = new Schema({
   }
 })
 
-export default mongoose.models.Item || mongoose.model('Item', ItemSchema)
+// export default mongoose.models.Item || mongoose.model('Item', ItemSchema)
