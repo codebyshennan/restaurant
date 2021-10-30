@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-// import { Flex, Container } from '@chakra-ui/react'
 // import Cart from '../../../components/web/payments/cart'
 // import CustomerDetails from '../../../components/web/payments/customerDetails'
 import CheckoutForm from '../../../components/payments/stripe/CheckoutForm'

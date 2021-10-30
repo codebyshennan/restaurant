@@ -11,7 +11,7 @@ export const SidebarMenu = (props) => {
       <Button variant="success" style={{backgroundColor: '#FFFFFF', color: '#000000'}} className="pt-8 shadow-md" >
 
         <div className="p-3 w-28">
-          What's New
+          What&apos;s New
         </div>
 
       </Button>

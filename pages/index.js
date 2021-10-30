@@ -1,9 +1,8 @@
 import 'tailwindcss/tailwind.css'
 import Head from 'next/head'
-import clientPromise from '../lib/mongodb'
 
 
-const Home = ({isConnected, menuItems}) => {
+const Home = () => {
   return (
     <div className="container">
       <Head>
@@ -15,24 +14,24 @@ const Home = ({isConnected, menuItems}) => {
   )
 }
 
-export const getServerSideProps = async(context) => {
-  // const client = await clientPromise
-  // const db = client.db('fastfood')
-  // const data =  await db.collection('menu').find({}).toArray()
+// export const getServerSideProps = async(context) => {
+//   // const client = await clientPromise
+//   // const db = client.db('fastfood')
+//   // const data =  await db.collection('menu').find({}).toArray()
 
-  // const menuItems = JSON.parse(JSON.stringify(data))
-  // // client.db() will be the default database passed in the MONGODB_URI
-  // // You can change the database by calling the client.db() function and specifying a database like:
-  // // const db = client.db("myDatabase");
-  // // Then you can execute queries against your database like so:
-  // // db.find({}) or any of the MongoDB Node Driver commands
+//   // const menuItems = JSON.parse(JSON.stringify(data))
+//   // // client.db() will be the default database passed in the MONGODB_URI
+//   // // You can change the database by calling the client.db() function and specifying a database like:
+//   // // const db = client.db("myDatabase");
+//   // // Then you can execute queries against your database like so:
+//   // // db.find({}) or any of the MongoDB Node Driver commands
 
-  // const isConnected = await client.isConnected()
+//   // const isConnected = await client.isConnected()
 
-  return {
-    // props: { isConnected, menuItems },
-  }
-}
+//   return {
+//     // props: { isConnected, menuItems },
+//   }
+// }
 
 
 /** 

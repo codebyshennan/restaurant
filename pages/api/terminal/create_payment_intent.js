@@ -1,6 +1,6 @@
 import React from 'react'
 
-const createPaymentIntent = async (req, req) => {
+const createPaymentIntent = async (req, res) => {
   const {method} = req
 
   // for terminal payments, the 'payment_method_types' parameter must include
