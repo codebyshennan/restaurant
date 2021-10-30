@@ -1,9 +1,35 @@
-import React from 'react'
+import React, {useContext, useState} from 'react'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { motion } from 'framer-motion'
+import {
+  NavLink,
+  useLocation
+} from "react-router-dom";
+import dbConnection from '../../lib/mongodb';
+import {CartContext} from '../../pages/kiosk/index.js'
 
 function CreditCardPayment() {
+  let location=useLocation()
+  const {cartItems, setCartItems} = useContext(CartContext)
+  const handlePayment = async () => {
+  await dbConnection() 
+  try {
+   const result = await db.items.insertOne(
+   { "order_list": [...location.cart],
+  "status": "processing",
+  "payment_by": "card",
+  "total_cost": location.total,
+  "created_at": new Date()
+   }
+)
+setCartItems([])
+console.log(result)
+  }
+  catch (err) {
+    console.log(err)
+  }
+  }
   return (
     <div className="pt-8 mt-11"
     >
@@ -12,11 +38,13 @@ function CreditCardPayment() {
           initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
     transition={{ duration: 0.5 }}>
-      <Button variant="success" style={{backgroundColor: '#FFFFFF', color: '#000000'}} className="pt-8 shadow-md" >
-        <div className="p-11">
-          NETS
-        </div>
-      </Button>
+      <NavLink to='/paymentsuccess'>
+        <Button variant="success" style={{backgroundColor: '#FFFFFF', color: '#000000'}} className="pt-8 shadow-md" onClick={() => {handlePayment()}}>
+          <div className="p-11">
+            NETS
+          </div>
+        </Button>
+      </NavLink>
       </motion.div>
       <motion.div className="mt-8"
           initial={{y: -50, opacity: 0}}

@@ -23,13 +23,15 @@ import SideSelection from '../../components/kiosk/menu/SideSelection.jsx';
 import {createMemoryHistory} from 'history'
 import Head from 'next/head'
 import dbConnection from '../../lib/mongodb';
-import Item from '../../models/Item'
+import PaymentSuccess from '../../components/kiosk/PaymentSuccess.jsx';
 
 
 const history = createMemoryHistory();
 
 // do we need to export or can we just put it in app?
 export const CartContext = createContext()
+export const MenuContext = createContext()
+export const DineInContext = createContext()
 
 const App = ({isConnected, menuItems}) => {
   const [dineIn, setDineIn] = useState(false)
@@ -37,7 +39,7 @@ const App = ({isConnected, menuItems}) => {
 
   console.log(menuItems)
   return (
-    <div className="container">
+    <div className="container justify-items-center w-screen">
       <Head>
         <link
         rel="stylesheet"
@@ -51,11 +53,10 @@ const App = ({isConnected, menuItems}) => {
           <Switch>
 
             <CartContext.Provider value ={{cartItems, setCartItems}}>
-
+              <MenuContext.Provider value ={menuItems}>
               <Route exact path="/">
                 <Splash dineIn={dineIn} setDineIn={setDineIn}/>
               </Route>
-
               <Route path="/menu">
                 <Menu/>
               </Route>
@@ -67,7 +68,7 @@ const App = ({isConnected, menuItems}) => {
               <Route path="/sideselection">
                 <SideSelection />
               </Route>
-
+            <DineInContext.Provider value ={{dineIn, setDineIn}}>
               <Route path="/paymentmode">
                 <PaymentMode />
               </Route>
@@ -75,6 +76,7 @@ const App = ({isConnected, menuItems}) => {
               <Route path="/creditcardpayment">
                 <CreditCardPayment />
               </Route>
+            </DineInContext.Provider>
 
               <Route path="/specialrequest">
                 <SpecialRequest />
@@ -83,7 +85,10 @@ const App = ({isConnected, menuItems}) => {
               <Route path="/cart">
                 <Cart />
               </Route>
-
+              <Route path="/paysuccess">
+                <PaymentSuccess />
+              </Route>
+            </MenuContext.Provider>
             </CartContext.Provider>
 
           </Switch>

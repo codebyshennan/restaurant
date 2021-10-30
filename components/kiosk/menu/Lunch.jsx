@@ -1,38 +1,51 @@
-import React from 'react'
+import React, {useContext, useState} from 'react'
 import Grid from '@mui/material/Grid'
 import Item from './Item.jsx'
 import SidebarMenu from '../SidebarMenu.jsx'
 import CartFooter from './CartFooter.jsx'
 import { motion } from 'framer-motion'
-import mains from '../../../data/mains.js'
+import { MenuContext } from '../../../pages/kiosk/index.js'
 
 function Lunch() {
-  console
+  const menuItems = useContext(MenuContext)
+  console.log(menuItems)
+  const [category, setCategory] = useState("main")
+  const [isMain, setIsMain] = useState(true)
+  const items = menuItems.filter((item) => {
+    if (item.type === category) {
+      return item
+    }
+  })
+  console.log(items)
   return (
-    <div>
-      <div>
-        <div className="flex overflow-hidden my-4">
-          <SidebarMenu />
-          <Grid container justify="center" spacing={4}>
-            {mains.map((item) => (
-              <motion.div 
-                className="my-4 px-4 w-1/2 overflow-hidden" 
-                initial={{x: 300, opacity: 0}}
-                animate={{x: 0, opacity: 1 }} 
-                transition={{ duration: 1 }} 
-                key={item._id.$oid}
-              >
-              <Grid item>
-                <Item item={item} id={item._id.$oid}
-                isMain={true}/>
-              </Grid>
-              </motion.div>
-            ))}
+    <>
+        <Grid container className = "h-screen w-screen" spacing = {10} justifyContent ="center">
+          <Grid item xs={3} justifyContent="center">
+            <SidebarMenu setCategory={setCategory} setIsMain={setIsMain}/>
           </Grid>
-        </div>
-        <CartFooter />
-      </div>
-    </div>
+          <Grid item xs={9} sx={{maxHeight: '80vh'}} className="overflow-y-scroll" justifyContent="center">
+            <Grid container justifyContent="center" spacing={4}>
+              {items.map((item) => (
+                <motion.div 
+                  className="my-4 px-4 w-1/2 overflow-hidden h-1/6" 
+                  initial={{x: 300, opacity: 0}}
+                  animate={{x: 0, opacity: 1 }} 
+                  transition={{ duration: 1 }} 
+                  key={item._id}
+                >
+                <Grid item>
+                  <Item item={item} id={item._id}
+                  isMain={isMain}/>
+                </Grid>
+                </motion.div>
+              ))}
+            </Grid>
+          </Grid>
+        <Grid item xs={12} sx={{maxHeight: '20vh'}}>
+          <CartFooter />
+        </Grid>
+      </Grid>
+    </>
   )
 }
 

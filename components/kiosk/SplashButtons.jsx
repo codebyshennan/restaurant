@@ -19,16 +19,20 @@ function SplashButtons({dineIn, setDineIn}) {
           initial={{y: -200, opacity: 0}}
       animate={{y: 0, opacity: 1 }} 
       transition={{ duration: 1 }}>
+          <NavLink to='/menu'>
             <Button  variant="text" className="shadow-lg" onClick ={()=>{handleSetDineIn(true)}}>
               <p className="p-10">
-                <NavLink to='/menu'>Dine In</NavLink>
+                Dine In
               </p> 
             </Button >
+          </NavLink>
+          <NavLink to='/menu'>
             <Button  variant="text" className="shadow-lg" onClick ={()=>{handleSetDineIn(false)}}>
               <p className="p-10">
-                <NavLink to='/menu'>Take out</NavLink>
+                Take out
               </p>
             </Button >
+          </NavLink>
           </motion.div>
       </div>
   )
