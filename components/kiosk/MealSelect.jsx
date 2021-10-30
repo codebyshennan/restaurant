@@ -32,7 +32,7 @@ export const MealSelect = (props) => {
     transition={{ duration: 1 }}>
         <NavLink to={
                 {pathname:"/specialrequest",
-                itemProp: {item: [item]}
+                itemProp: {item: item}
             }}>
           <Button variant="error" style={{backgroundColor: '#cd5c5c', color: '#FFFFFF'}}className="pt-8 shadow-md">
             <div className="p-11">
