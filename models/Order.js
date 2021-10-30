@@ -12,7 +12,7 @@ const OrderSchema = new Schema({
   //   required: []
   // },
   order_list: {
-    type: [ItemSchema],
+    type: Schema.Types.Mixed,
     required: [true, 'Order cannot be empty']
   },
   status: {
@@ -20,6 +20,7 @@ const OrderSchema = new Schema({
   }, 
   payment_by: {
     type: String,
+    enum: ['cash','card']
   },
   total_cost: {
     type: Number,
