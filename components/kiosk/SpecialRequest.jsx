@@ -1,4 +1,4 @@
-import React, {useContext, useState, Fragment, useEffect} from 'react'
+import React, {useContext, useState, Fragment, useEffect, useReducer} from 'react'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
@@ -10,55 +10,49 @@ import {
   useLocation
 } from "react-router-dom";
 import {CartContext} from '../../pages/kiosk/index.js'
-import { ListItemSecondaryAction } from '@mui/material';
-import { LocalConvenienceStoreOutlined } from '@mui/icons-material';
+
 
 export const SpecialRequest = (props) => {
   let location = useLocation()
+  console.log(location.itemProp.item)
+  const initialState = JSON.parse(JSON.stringify(location.itemProp.item[0]))
+  console.log(initialState === location.itemProp.item[0])
   // change to allow sets
-  const itemAddOns = location.itemProp.item[0].add_ons
-  const itemAddOnsArray = Object.entries(itemAddOns)
-
-  const [addOns, setAddOns] = useState(itemAddOnsArray)
+  //change to index for diff prices
   const {cartItems, setCartItems} = useContext(CartContext)
+  const [currentItem, setCurrentItem] = useState(initialState)
   const changeAddons = (itemIndex, didAdd) => {
-    const currentAddOns = addOns
-    if (didAdd) {
-      currentAddOns[itemIndex][1] += 1
+    if (didAdd && currentItem.ingredients[itemIndex].quantity < currentItem.ingredients[itemIndex].limit) {
+      currentItem.ingredients[itemIndex].quantity += 1
+      currentItem.price[0].price += currentItem.ingredients[itemIndex].price_per_unit
     }
-    else {
-      currentAddOns[itemIndex][1] -= 1
+    else if (!didAdd && currentItem.ingredients[itemIndex].quantity > 0) {
+      currentItem.ingredients[itemIndex].quantity -= 1
+      currentItem.price[0].price -= currentItem.ingredients[itemIndex].price_per_unit
     }
-    setAddOns([...currentAddOns])
+    setCurrentItem({...currentItem, price: currentItem.price, ingredients: currentItem.ingredients})
   }
 
   const handleAddToCart = () => {
     // need to change to allow sets
-    const newAddons = Object.fromEntries(addOns)
-    location.itemProp.item[0].add_ons = newAddons
-    setCartItems([...cartItems, location.itemProp.item[0]])
-    console.log(cartItems)
+
+    setCartItems([...cartItems, currentItem])
   }
 
-  useEffect(() => {
-    console.log(cartItems)
-    // eslint-disable-next-line
-  }, [cartItems])
-
-  const data = addOns
-                .map(([key,value], idx)=>{
+  const data = currentItem.ingredients
+                .map((ingredient, idx)=>{
                   return ( 
                       <Grid container key={idx} >
                         <Grid item xs={8}>
                           <div className="pr-5 py-5">
-                           {key}
+                           {ingredient.name}
                           </div>
                         </Grid>
 
                         <Grid item xs={4}>
                           <div className="pt-5">
-                            <p id={key}>
-                              {value}
+                            <p>
+                              {ingredient.quantity}
                             </p>
                             <p>
                               <a onClick={() => {changeAddons(idx, false)}}><RemoveIcon color="error"/></a>
@@ -78,7 +72,7 @@ export const SpecialRequest = (props) => {
         <div className="pt-8 mt-11">
 
           <Typography variant="h3" color="initial">Any Special Requests?</Typography>
-
+        {/* {location.itemProp.item.map((item, i) =>)} */}
           <Grid container
             direction="row"
             justifyContent="center"
@@ -88,9 +82,17 @@ export const SpecialRequest = (props) => {
               <div className="mt-8 shadow-lg h-96 rounded-3xl">
                 { data }
               </div>
+              <Typography variant="h6" color="initial">
+               Subtotal: {currentItem.price[0].price}
+              </Typography>
             </Grid>
           </Grid>
 
+           {/* <motion.div className="mt-11" initial={{y: -50, opacity: 0}}
+            animate={{y: 0, opacity: 1 }} 
+            transition={{ duration: 1 }}>
+
+           </motion.div> */}
 
           <motion.div className="mt-11" initial={{y: -50, opacity: 0}}
             animate={{y: 0, opacity: 1 }} 

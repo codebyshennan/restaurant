@@ -12,7 +12,6 @@ export const MealSelect = (props) => {
   let location = useLocation()
   console.log(location)
   const item = location.itemProp.item
-  
   return (
     <div className="pt-8 mt-11">
       <Typography variant="h3" color="initial">Would you like to make this a meal?</Typography>
@@ -31,29 +30,29 @@ export const MealSelect = (props) => {
       <motion.div className="mt-8" initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
     transition={{ duration: 1 }}>
-        <Button variant="error" style={{backgroundColor: '#cd5c5c', color: '#FFFFFF'}}className="pt-8 shadow-md">
-          <div className="p-11">
-            <NavLink to={
-              {pathname:"/specialrequest",
-              itemProp: {item: [item]}
-          }}>
-              <p>No, thank you! <br />
-              <span className="font-extralight">A-la Carte: $TOTALPRICE</span>
-              </p>
-            </NavLink>
-          </div>
-        </Button>
+        <NavLink to={
+                {pathname:"/specialrequest",
+                itemProp: {item: [item]}
+            }}>
+          <Button variant="error" style={{backgroundColor: '#cd5c5c', color: '#FFFFFF'}}className="pt-8 shadow-md">
+            <div className="p-11">
+                <p>No, thank you! <br />
+                <span className="font-extralight">A-la Carte: $TOTALPRICE</span>
+                </p> 
+            </div>
+          </Button>
+        </NavLink>
       </motion.div>
       <motion.div className="mt-11" initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
     transition={{ duration: 1.5 }}>
-        <Button variant="error" style={{backgroundColor: '#ff0000', color: '#FFFFFF'}} className="pt-8 shadow-md">
-        <div className="p-11">
-          <NavLink to="/menu">
-            Cancel Item
-          </NavLink>
-        </div>
-      </Button>
+        <NavLink to="/menu">
+          <Button variant="error" style={{backgroundColor: '#ff0000', color: '#FFFFFF'}} className="pt-8 shadow-md">
+            <div className="p-11">
+                Cancel Item
+            </div>
+          </Button>
+        </NavLink>
       </motion.div>
     </div>
   )

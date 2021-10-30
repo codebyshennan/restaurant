@@ -12,7 +12,7 @@ export const Menu = () => {
     }
   // Need to pass in time to sides and drinks as well
   return (
-    <div>
+    <div className="justify-items-center w-screen">
       {currentHour() > 11 || currentHour() < 5 ? 
       <Lunch /> :
       <Breakfast />
