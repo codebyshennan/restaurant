@@ -6,30 +6,31 @@ import {
   NavLink,
   useLocation
 } from "react-router-dom";
-import dbConnection from '../../lib/mongodb';
 import {CartContext} from '../../pages/kiosk/index.js'
 
 function CreditCardPayment() {
   let location=useLocation()
   const {cartItems, setCartItems} = useContext(CartContext)
   const handlePayment = async () => {
-  await dbConnection() 
-  try {
-   const result = await db.items.insertOne(
-   { "order_list": [...location.cart],
-  "status": "processing",
-  "payment_by": "card",
-  "total_cost": location.total,
-  "created_at": new Date()
-   }
-)
-setCartItems([])
-console.log(result)
+
+    const order = { 
+        "order_list": [...location.cart],
+        "status": "processing",
+        "payment_by": "card",
+        "total_cost": location.total,
+        "created_at": new Date()
+        }
+
+    let request = await fetch('/api/orders', {
+            method: 'POST',
+            body: JSON.stringify(order),
+        }); 
+
+    setCartItems([])
+    console.log(request.message)
+    
   }
-  catch (err) {
-    console.log(err)
-  }
-  }
+
   return (
     <div className="pt-8 mt-11"
     >
