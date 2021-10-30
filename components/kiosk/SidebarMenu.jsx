@@ -21,7 +21,7 @@ export const SidebarMenu = ({setCategory, setIsMain}) => {
 
 
         <div className="p-3 w-auto">
-          What's New
+          What&apos;s New
         </div>
 
       </Button>

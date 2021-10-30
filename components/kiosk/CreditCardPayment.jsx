@@ -21,13 +21,14 @@ function CreditCardPayment() {
         "created_at": new Date()
         }
 
-    let request = await fetch('/api/orders', {
+    await fetch('/api/orders', {
             method: 'POST',
             body: JSON.stringify(order),
-        }); 
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
 
     setCartItems([])
-    console.log(request.message)
     
   }
 
