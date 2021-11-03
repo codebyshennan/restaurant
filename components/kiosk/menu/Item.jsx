@@ -5,17 +5,22 @@ import {
   NavLink,
   Link
 } from "react-router-dom";
-import {CartContext} from '../../../pages/kiosk/index.js'
+import {CartContext, SubtotalContext} from '../../../pages/kiosk/index.js'
 
 // on click, set elevation to lower (1 or 0) and set innerBG color to gray
-function Item({item, isMain, id }) {
+function Item({item, isMain, id,}) {
+
+  console.log(item)
+  const price = item.price[0].price || item.price
   const classes = useStyles()
   const {cartItems, setCartItems} = useContext(CartContext)
+  const {subtotal, setSubtotal} = useContext(SubtotalContext)
   const path = () => {
     if (item.type === 'beverage') {
+      console.log('returned menu')
       return '/menu'
     }
-    else if (isMain) {
+    else if (isMain || !item.ingredients) {
       return '/mealselect'
     }
     return '/specialrequest'
@@ -24,6 +29,8 @@ function Item({item, isMain, id }) {
   const addToCart = (itemAdded) => {
     if (itemAdded.type === 'beverage') {
       setCartItems([...cartItems, itemAdded])
+      subtotal += itemAdded.price[1].price
+      setSubtotal(subtotal)
     }
   }
   return (
@@ -41,7 +48,7 @@ function Item({item, isMain, id }) {
                 {item.name}
               </Typography>
               <Typography variant="h6" >
-                {item.price[0].price}
+                {price}
               </Typography>
             </div>
           </CardContent>

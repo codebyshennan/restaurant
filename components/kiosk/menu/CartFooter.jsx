@@ -5,14 +5,12 @@ import Grid from '@mui/material/Grid'
 import {
   NavLink,
 } from "react-router-dom";
-import {CartContext} from '../../../pages/kiosk/index.js'
+import {CartContext, SubtotalContext} from '../../../pages/kiosk/index.js'
+
 function Footer() {
     const {cartItems, setCartItems} = useContext(CartContext)
+    const {subtotal, setSubtotal} = useContext(SubtotalContext)
     console.log(cartItems)
-    const subtotal = 0
-    cartItems.forEach((item) => {
-      subtotal += item.price[0].price
-    })
   return (
     <div className="flex justify-center">
           <div className="rounded-2xl mb-3">

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { connect } from 'react-redux'
 import Lunch from './menu/Lunch.jsx'
 import Breakfast from './menu/Breakfast.jsx'
@@ -15,7 +15,7 @@ export const Menu = () => {
     <div className="justify-items-center w-screen">
       {currentHour() > 11 || currentHour() < 5 ? 
       <Lunch /> :
-      <Breakfast />
+      <Lunch />
       }
     </div>
   )

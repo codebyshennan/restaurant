@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import { MenuContext } from '../../../pages/kiosk/index.js'
 
 function Drinks() {
-  const menuItems = useContext(MenuContext)
+  const [menuItems] = useContext(MenuContext)
   console.log(menuItems)
   const drinks = menuItems.filter((item) => {
     if (item.type ==='beverage') {

@@ -19,11 +19,14 @@ import CreditCardPayment from '../../components/kiosk/CreditCardPayment.jsx'
 import SpecialRequest from '../../components/kiosk/SpecialRequest.jsx';
 import Cart from '../../components/kiosk/Cart.jsx'
 import Menu from '../../components/kiosk/Menu.jsx'
+import ReviewScreen from '../../components/kiosk/menu/ReviewScreen';
 import SideSelection from '../../components/kiosk/menu/SideSelection.jsx';
 import {createMemoryHistory} from 'history'
 import Head from 'next/head'
 import dbConnection from '../../lib/mongodb';
 import PaymentSuccess from '../../components/kiosk/PaymentSuccess.jsx';
+import SideRequest from '../../components/kiosk/menu/SideRequest';
+import CartPopUp from '../../components/kiosk/menu/CartPopUp';
 
 
 const history = createMemoryHistory();
@@ -31,13 +34,15 @@ const history = createMemoryHistory();
 // do we need to export or can we just put it in app?
 export const CartContext = createContext()
 export const MenuContext = createContext()
+export const MealContext = createContext()
 export const DineInContext = createContext()
+export const CompatibleMealContext = createContext()
+export const SubtotalContext = createContext()
 
-const App = ({isConnected, menuItems}) => {
+const App = ({isConnected, menuItems, mealItems, compatibleMealItems}) => {
   const [dineIn, setDineIn] = useState(false)
   const [cartItems, setCartItems] = useState([])
-
-  console.log(menuItems)
+  const [subtotal, setSubtotal] = useState(0.00)
   return (
     <div className="container justify-items-center w-screen">
       <Head>
@@ -54,6 +59,9 @@ const App = ({isConnected, menuItems}) => {
 
             <CartContext.Provider value ={{cartItems, setCartItems}}>
               <MenuContext.Provider value ={menuItems}>
+                <MealContext.Provider value={mealItems}>
+                  <CompatibleMealContext.Provider value={compatibleMealItems}>
+                    <SubtotalContext.Provider value={{subtotal, setSubtotal}} >
               <Route exact path="/">
                 <Splash dineIn={dineIn} setDineIn={setDineIn}/>
               </Route>
@@ -63,6 +71,10 @@ const App = ({isConnected, menuItems}) => {
 
               <Route path="/mealselect">
                 <MealSelect />
+              </Route>
+              
+              <Route path="/addtocart">
+                <CartPopUp />
               </Route>
 
               <Route path="/sideselection">
@@ -81,6 +93,9 @@ const App = ({isConnected, menuItems}) => {
               <Route path="/specialrequest">
                 <SpecialRequest />
               </Route>
+              <Route path="/siderequest">
+                <SideRequest />
+              </Route>
 
               <Route path="/cart">
                 <Cart />
@@ -88,6 +103,9 @@ const App = ({isConnected, menuItems}) => {
               <Route path="/paysuccess">
                 <PaymentSuccess />
               </Route>
+              </SubtotalContext.Provider>
+              </CompatibleMealContext.Provider>
+              </MealContext.Provider>
             </MenuContext.Provider>
             </CartContext.Provider>
 
@@ -105,9 +123,34 @@ export const getServerSideProps = async(context) => {
   const client = await dbConnection()
 
   const db = client.db('fastfood')
-  const data =  await db.collection('items').find({}).toArray()
-
+  const data =  await db.collection('items').find({}).toArray() 
+  const mealData = await db.collection('meals').find({}).toArray()
+  const compatibleMealData = await db.collection("meals").aggregate([
+	{ $lookup:
+		 {
+			 from: "items",
+			localField: "main_id",
+			foreignField: "_id",
+			 as: "main"
+		}},
+		{$lookup:{
+			 from: "items",
+			localField: "side_id",
+			foreignField: "_id",
+			 as: "side"
+		}},
+		{$lookup:{
+			 from: "items",
+			localField: "beverage_id",
+			foreignField: "_id",
+			 as: "beverage"
+		},
+	},
+]).toArray()
+  const compatibleMealItems = JSON.parse(JSON.stringify(compatibleMealData))
+  console.log(compatibleMealData)
   const menuItems = JSON.parse(JSON.stringify(data))
+  const mealItems = JSON.parse(JSON.stringify(mealData))
   // client.db() will be the default database passed in the MONGODB_URI
   // You can change the database by calling the client.db() function and specifying a database like:
   // const db = client.db("myDatabase");
@@ -117,7 +160,7 @@ export const getServerSideProps = async(context) => {
   const isConnected = await client.isConnected()
 
   return {
-    props: { isConnected, menuItems },
+    props: { isConnected, menuItems, mealItems, compatibleMealItems},
   }
 }
 

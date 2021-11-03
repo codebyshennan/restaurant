@@ -4,11 +4,13 @@ import Item from './Item.jsx'
 import SidebarMenu from '../SidebarMenu.jsx'
 import CartFooter from './CartFooter.jsx'
 import { motion } from 'framer-motion'
-import { MenuContext } from '../../../pages/kiosk/index.js'
+import { MenuContext, MealContext } from '../../../pages/kiosk/index.js'
 
 function Lunch() {
   const menuItems = useContext(MenuContext)
+  const mealItems = useContext(MealContext)
   console.log(menuItems)
+  console.log(mealItems)
   const [category, setCategory] = useState("main")
   const [isMain, setIsMain] = useState(true)
   const items = menuItems.filter((item) => {
@@ -16,14 +18,15 @@ function Lunch() {
       return item
     }
   })
-  console.log(items)
+  
+  console.log(isMain)
   return (
     <>
         <Grid container className = "h-screen w-screen" spacing = {10} justifyContent ="center">
           <Grid item xs={3} justifyContent="center">
             <SidebarMenu setCategory={setCategory} setIsMain={setIsMain}/>
           </Grid>
-          <Grid item xs={9} sx={{maxHeight: '80vh'}} className="overflow-y-scroll" justifyContent="center">
+          <Grid item xs={9} sx={{maxHeight: '80vh'}} className="overflow-y-scroll">
             <Grid container justifyContent="center" spacing={4}>
               {items.map((item) => (
                 <motion.div 
@@ -42,7 +45,7 @@ function Lunch() {
             </Grid>
           </Grid>
         <Grid item xs={12} sx={{maxHeight: '20vh'}}>
-          <CartFooter />
+          <CartFooter/>
         </Grid>
       </Grid>
     </>

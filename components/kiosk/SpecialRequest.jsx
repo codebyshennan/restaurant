@@ -79,11 +79,11 @@ export const SpecialRequest = (props) => {
             alignItems="center"
             spacing={3}>
             <Grid item xs>
-              <div className="mt-8 shadow-lg h-96 rounded-3xl">
+              <div className="mt-8 shadow-lg rounded-3xl">
                 { data }
               </div>
               <Typography variant="h6" color="initial">
-               Subtotal: {currentItem.price[0].price}
+               Subtotal: {currentItem.price[0].price.toFixed(2)}
               </Typography>
             </Grid>
           </Grid>
