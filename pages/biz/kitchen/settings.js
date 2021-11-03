@@ -8,12 +8,21 @@ import StatusBar from '../../../components/biz/kitchen/StatusBar'
 import dbConnection from '../../../lib/mongodb'
 import OrderCards from '../../../components/biz/kitchen/OrderCards'
 import 'tailwindcss/tailwind.css'
+import Grid from '@mui/material/Grid';
 
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import InboxIcon from '@mui/icons-material/Inbox';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import VerticalTabs from '../../../components/biz/kitchen/TabPanel'
 
 
 const fetcher = (...args) => fetch(...args).then(res=> res.json())
 
-const Tracker = ({orders}) => {
+const Settings = ({orders}) => {
 
   // continuously fetch data from server
   const { data, error } = useSWR('/api/kitchen/orders', fetcher, { refreshInterval: 1000 })
@@ -30,15 +39,13 @@ const Tracker = ({orders}) => {
   return (
     <>
       <Navbar />
-      <div className="mt-3 ml-3">
-        <OrderCards orders={orders} />
-      </div>
+      <VerticalTabs />
       <StatusBar />
     </>
   )
 }
 
-export default Tracker
+export default Settings
 
 
 export const getServerSideProps = async(context) => {
