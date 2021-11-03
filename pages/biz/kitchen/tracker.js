@@ -9,11 +9,9 @@ import dbConnection from '../../../lib/mongodb'
 import OrderCards from '../../../components/biz/kitchen/OrderCards'
 import 'tailwindcss/tailwind.css'
 
-
-
 const fetcher = (...args) => fetch(...args).then(res=> res.json())
 
-const Tracker = ({orders}) => {
+const Tracker = ({ordersData}) => {
 
   // continuously fetch data from server
   const { data, error } = useSWR('/api/kitchen/orders', fetcher, { refreshInterval: 1000 })
@@ -23,17 +21,15 @@ const Tracker = ({orders}) => {
 
   // find out how to hot-sync current state with incoming state
   // need to filter differenes
-  console.log(data)
-  console.log(orders)
 
 
   return (
     <>
       <Navbar />
-      <div className="mt-3 ml-3">
-        <OrderCards orders={orders} />
+      <div className="mt-3 ml-3 overflow-x-auto">
+        <OrderCards orders = { data } />
       </div>
-      <StatusBar />
+      <StatusBar orders = {data}/>
     </>
   )
 }
@@ -60,11 +56,11 @@ export const getServerSideProps = async(context) => {
     }
   }]).toArray()
 
-  const orders = JSON.parse(JSON.stringify(data))
+  const ordersData = JSON.parse(JSON.stringify(data))
 
   return {
     props: {
-      orders
+      ordersData
     }
   }
 
