@@ -96,6 +96,9 @@ const App = ({isConnected, menuItems, mealItems, compatibleMealItems}) => {
               <Route path="/siderequest">
                 <SideRequest />
               </Route>
+              <Route path="/reviewscreen">
+                <ReviewScreen />
+              </Route>
 
               <Route path="/cart">
                 <Cart />

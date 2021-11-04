@@ -18,16 +18,18 @@ function SideRequest() {
   let location = useLocation()
   const orderedItem = location.itemProp.itemMeal
   const [menuItems] = useContext(MenuContext)
+  const [sidePrice, setSidePrice] = useState(0.00)
+  const [drinkPrice, setDrinkPrice] = useState(0.00)
+  console.log(sidePrice)
+  console.log(drinkPrice)
   const [category, setCategory] = useState('meal')
   const [currentItems, setCurrentItems] = useState([])
   const [goToReview, setGoToReview] = useState(false)
-  console.log(currentItems)
-  const [currentPrice, setCurrentPrice] = useState(0.00)
   console.log(goToReview)
-  console.log(category)
+  const [currentPrice, setCurrentPrice] = useState(0.00)
   return (
     <div>
-      {goToReview && <ReviewScreen />}
+      {goToReview && <ReviewScreen currentPrice={currentPrice} currentItems={currentItems} setCurrentItems={setCurrentItems} setGoToReview={setGoToReview} setCategory={setCategory} setCurrentPrice={setCurrentPrice}/>}
       {!goToReview && <Grid container className = "h-screen w-screen" spacing = {5} justifyContent ="center">
          <Grid item xs={3} sx={{maxHeight: '80vh'}} className="overflow-y-scroll" justifyContent="center">
           <motion.div 
@@ -44,12 +46,11 @@ function SideRequest() {
             Side
             {currentItems[1] && (
               <div>
-              {currentItems[1][0].name}
+              {currentItems[1].name}
               <br />
-              {currentItems[1][1]}
+              {currentItems[1].size}
               <br />
-              {currentItems[1][1] === 'M' && currentItems[1][0].price[1].price}
-              {currentItems[1][1] === 'L' && currentItems[1][0].price[2].price}
+              {sidePrice}
               </div>
             )}
           </motion.div> 
@@ -61,12 +62,11 @@ function SideRequest() {
             Drink
             {currentItems[2] && (
               <div>
-              {currentItems[2][0].name}
+              {currentItems[2].name}
               <br />
-              {currentItems[2][1]}
-                            <br />
-              {currentItems[2][1] === 'M' && currentItems[2][0].price[1].price}
-              {currentItems[2][1] === 'L' && currentItems[2][0].price[2].price}
+              {currentItems[2].size}
+              <br />
+              {drinkPrice}
               </div>
             )}
           </motion.div>
@@ -79,13 +79,13 @@ function SideRequest() {
           </motion.div>
          </Grid>
          <Grid item xs={9}>
-           {category === 'meal' && <ItemSelection category={'meal'}  currentItems={currentItems} setCurrentItems={setCurrentItems} mainItem={orderedItem} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice} setCategory={setCategory}/>}
+           {category === 'meal' && <ItemSelection category={'meal'}  currentItems={currentItems} setCurrentItems={setCurrentItems} mainItem={orderedItem} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice} setCategory={setCategory} setSidePrice={setSidePrice} setDrinkPrice={setDrinkPrice}/>}
 
-           {category === 'sides' && <ItemSelection category={'sides'} currentItems={currentItems} setCurrentItems={setCurrentItems} mainItem={orderedItem.side[0]} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice} setCategory={setCategory}/>}
+           {category === 'sides' && <ItemSelection category={'sides'} currentItems={currentItems} setCurrentItems={setCurrentItems} mainItem={orderedItem.side[0]} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice} setCategory={setCategory} sidePrice={sidePrice} setSidePrice={setSidePrice}/>}
 
-           {category === 'beverage' && <ItemSelection category={'beverage'} currentItems={currentItems} setCurrentItems={setCurrentItems} mainItem={orderedItem.beverage[0]} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice} setGoToReview={setGoToReview} setCategory={setCategory}/>}
+           {category === 'beverage' && <ItemSelection category={'beverage'} currentItems={currentItems} setCurrentItems={setCurrentItems} mainItem={orderedItem.beverage[0]} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice} setGoToReview={setGoToReview} setCategory={setCategory} drinkPrice={drinkPrice} setDrinkPrice={setDrinkPrice} />}
 
-           <MenuCartFooter currentItems={currentItems} currentPrice={currentPrice} />
+           <MenuCartFooter currentItems={currentItems} currentPrice={currentPrice} setGoToReview={setGoToReview} setCurrentItems={setCurrentItems} setCategory={setCategory} setCurrentPrice={setCurrentPrice}/>
         </Grid>
       </Grid>
       }
