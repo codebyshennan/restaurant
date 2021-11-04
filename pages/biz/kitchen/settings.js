@@ -6,19 +6,9 @@ import useSWR from 'swr'
 import Navbar from '../../../components/biz/kitchen/Navbar'
 import StatusBar from '../../../components/biz/kitchen/StatusBar'
 import dbConnection from '../../../lib/mongodb'
-import OrderCards from '../../../components/biz/kitchen/OrderCards'
 import 'tailwindcss/tailwind.css'
-import Grid from '@mui/material/Grid';
-
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import InboxIcon from '@mui/icons-material/Inbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
 import VerticalTabs from '../../../components/biz/kitchen/TabPanel'
-
+import Grid from '@mui/material/Grid'
 
 const fetcher = (...args) => fetch(...args).then(res=> res.json())
 
@@ -27,13 +17,27 @@ const Settings = ({orders}) => {
   // continuously fetch data from server
   const { data, error } = useSWR('/api/kitchen/orders', fetcher, { refreshInterval: 1000 })
 
-  if (error) return (<div>Failed to load</div>)
-  if (!data) return (<div> Loading... </div>)
+  const Loader = ({message}) => {
+    return (
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      style={{ minHeight: '100vh' }}
+    >
 
-  // find out how to hot-sync current state with incoming state
-  // need to filter differenes
-  console.log(data)
-  console.log(orders)
+      <Grid item xs={3}>
+      { message == "loading" ? <CircularProgress /> : "Error: Failed to load"}
+      </Grid>   
+      
+    </Grid> 
+    )
+  }
+
+  if (error) return (<Loader message={"failed"} />)
+  if (!data) return (<Loader message={"loading"} />)
 
 
   return (
