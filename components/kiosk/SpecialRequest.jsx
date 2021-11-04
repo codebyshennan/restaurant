@@ -14,13 +14,19 @@ import {CartContext} from '../../pages/kiosk/index.js'
 
 export const SpecialRequest = (props) => {
   let location = useLocation()
-  console.log(location.itemProp.item)
-  const initialState = JSON.parse(JSON.stringify(location.itemProp.item[0]))
-  console.log(initialState === location.itemProp.item[0])
+  const index = location.index
+  const currentItems = location.itemProp
+  const setCurrentItems = location.setItemsProp
+  console.log(index)
+  console.log(currentItems)
+  console.log(setCurrentItems)
+  const initialState = JSON.parse(JSON.stringify(currentItems[index]))
+  console.log(initialState === currentItems[index])
   // change to allow sets
   //change to index for diff prices
   const {cartItems, setCartItems} = useContext(CartContext)
   const [currentItem, setCurrentItem] = useState(initialState)
+  console.log(currentItem)
   const changeAddons = (itemIndex, didAdd) => {
     if (didAdd && currentItem.ingredients[itemIndex].quantity < currentItem.ingredients[itemIndex].limit) {
       currentItem.ingredients[itemIndex].quantity += 1
@@ -35,7 +41,7 @@ export const SpecialRequest = (props) => {
 
   const handleAddToCart = () => {
     // need to change to allow sets
-
+    
     setCartItems([...cartItems, currentItem])
   }
 
@@ -102,7 +108,7 @@ export const SpecialRequest = (props) => {
           <NavLink to="/menu">
             <Button variant="success" style={{backgroundColor: '#009900', color: '#FFFFFF'}} className="pt-8 shadow-md" onClick={() => { handleAddToCart()}}>
             <div className="p-11">
-                  Add to Cart
+                  I'm done customising
             </div>
             </Button>
          </NavLink>
@@ -113,10 +119,10 @@ export const SpecialRequest = (props) => {
             animate={{y: 0, opacity: 1 }} 
             transition={{ duration: 1.5 }}>
             
-            <NavLink to="/menu">
+            <NavLink to="/reviewscreen">
               <Button variant="error" style={{backgroundColor: '#ff0000', color: '#FFFFFF'}} className="pt-8 shadow-md">
                 <div className="p-11">
-                    Cancel Item
+                    Cancel Edit
                 </div>
               </Button>
             </NavLink>

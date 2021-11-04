@@ -10,13 +10,23 @@ import {
 } from "react-router-dom";
 import {CartContext, SubtotalContext} from '../../../pages/kiosk/index.js'
 
-function MenuCartFooter({currentItems, currentPrice}) {
+function MenuCartFooter({currentPrice, setCurrentItems, currentItems, setGoToReview, setCategory, setCurrentPrice}) {
   const {cartItems, setCartItems} = useContext(CartContext)
   const {subtotal, setSubtotal} = useContext(SubtotalContext)
+    const addToCart = () => {
+    setSubtotal(subtotal += currentPrice)
+    setCartItems(...cartItems, currentItems)
+  }
+  const handleReset = () => {
+    setCurrentItems([])
+    setGoToReview(false)
+    setCategory('meal')
+    setCurrentPrice(0.00)
+  }
   return (
     <div className='mt-5'>
       <Grid container direction="column">
-        <Grid item xs={4  }>
+        <Grid item xs={6}>
           <Grid container >
             <Grid item xs={5}>
               <Badge badgeContent={1} color="primary">
@@ -25,23 +35,25 @@ function MenuCartFooter({currentItems, currentPrice}) {
               <Typography variant="h6" color="initial"> {currentPrice}</Typography>
             </Grid>
             <Grid item xs={7}>
-              <NavLink to="/cart">
-              <Button variant="outlined" className='p-6'>
-                View Cart / Checkout
+              <NavLink to="/menu">
+              <Button variant="outlined" className='p-8' onClick={() => {addToCart()}}>
+                Add to Cart
               </Button>
               </NavLink>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <Grid container >
            <Grid item xs={4}>
-              <Button variant="outlined" className='p-6'>
+              <Button variant="outlined" className='p-6' onClick={() => {
+                handleReset()
+              }}>
                 Start Over
               </Button>
             </Grid>
             <Grid item xs={4}>
-              <Button variant="outlined" className='p-6'>
+              <Button variant="outlined" className='p-8'>
                 Reach Mode
               </Button>
             </Grid>
