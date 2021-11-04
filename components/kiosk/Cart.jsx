@@ -10,36 +10,38 @@ import {
   NavLink,
   useLocation
 } from "react-router-dom";
-import {CartContext} from '../../pages/kiosk/index.js'
+import {CartContext, SubtotalContext} from '../../pages/kiosk/index.js'
+import Image from 'next/image'
 
 function Cart() {
   let location = useLocation()
   const {cartItems, setCartItems} = useContext(CartContext)
   const [newCart, setNewCart] = useState(location.cartProp)
-  const [newSubtotal, setNewSubtotal] = useState(Number(location.subtotal))
-  console.log(typeof location.subtotal)
+  const {subtotal, setSubtotal} = useContext(SubtotalContext)
+  console.log(cartItems)
   const handleItemNumEdit = (didIncrease, index) => {
     const duplicatedItem = newCart[index]
     console.log(duplicatedItem)
     if(didIncrease) {
-      newSubtotal += duplicatedItem.price[0].price
+      subtotal += duplicatedItem.price[0].price
       setNewCart([...newCart, duplicatedItem])
     }
     else {
-      newSubtotal -= duplicatedItem.price[0].price
+      subtotal -= duplicatedItem.price[0].price
       setNewCart(newCart.filter((item, idx) => {if (idx !== index) return item}))
     }
-    console.log(newSubtotal)
-  setNewSubtotal(newSubtotal)
+    console.log(subtotal)
+  setSubtotal(subtotal)
   }
   const handleCartEdit = () => {
     setCartItems(newCart)
   }
   const itemData = newCart.map((item, idx) => {return (
       <div className="m-12 border-2 p-8 border-opacity-100 font-bold rounded-2xl" key={idx} >
-        <Grid container spacing={2}>
+        {item.beverage === undefined && (
+           <Grid container spacing={2}>
           <Grid item xs={4}>
-            IMAGE
+            <Image src={item.image_url} height='200' width='200' alt={item.name}/>
           </Grid>
           <Grid item xs={4}>
             {item.name} <br />
@@ -56,6 +58,30 @@ function Cart() {
           {item.price[0].price}
           </Grid>
         </Grid>
+        )}
+        {item.beverage && (
+          <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <Image src={item.image_url} height='200' width='200' alt={item.name}/>
+          </Grid>
+          <Grid item xs={4}>
+            {item.name} <br />
+            {item.side[0].name} <br />
+            {item.beverage[0].name} <br />
+            <a onClick={() => {handleItemNumEdit(true,idx)}}>
+              <ControlPointIcon color="success"/>
+            </a>
+          </Grid>
+          <Grid item xs={4}>
+          <a onClick={() => {handleItemNumEdit(false,idx)}}>
+            <CloseIcon color="error"/>
+          </a>
+          <br />
+          {/* allow them to update number of items */}
+          {item.price}
+          </Grid>
+        </Grid>
+        )}
       </div>
   )})
   return (
@@ -68,19 +94,19 @@ function Cart() {
     animate={{y: 0, opacity: 1 }} 
     transition={{ duration: 0.5 }}>
         <p>Item Total:</p>
-        <p>{newSubtotal}</p>
+        <p>${subtotal.toFixed(2)}</p>
         </motion.div>
         <motion.div className="flex justify-between mx-64 my-16 font-semibold" initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
     transition={{ duration: 1.0 }}>
         <p>Tax:</p>
-        <p>{parseFloat(newSubtotal * 0.17).toFixed(2)}</p>
+        <p>${(subtotal * 0.17).toFixed(2)}</p>
         </motion.div>
         <motion.div className="flex justify-between mx-64 my-16 font-semibold" initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
     transition={{ duration: 1.5 }}>
         <p>Total:</p>
-        <p>{parseFloat(newSubtotal * 1.17).toFixed(2)}</p>
+        <p>${(subtotal * 1.17).toFixed(2)}</p>
         </motion.div>
         <motion.div className="mt-11" initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
@@ -88,7 +114,7 @@ function Cart() {
       <NavLink to={
         {pathname:"/paymentmode",
         cart:newCart,
-        total:newSubtotal * 1.17
+        total:subtotal * 1.17
       }
       }>
         <Button variant="text" style={{backgroundColor: '#ffae42', color: '#000000'}} className="pt-8 shadow-md" onClick={() => {handleCartEdit()}}>

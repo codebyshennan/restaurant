@@ -19,7 +19,7 @@ const style = {
   p: 4,
 };
 
-function ItemSelection({category, currentItems, setCurrentItems, mainItem, currentPrice, setCurrentPrice, setGoToReview, setCategory, setSidePrice, setDrinkPrice, sidePrice, drinkPrice}) {
+function ItemSelection({category, currentItems, setCurrentItems, mainItem, currentPrice, setCurrentPrice, setGoToReview, setCategory, setSidePrice, setDrinkPrice, sidePrice, drinkPrice, mealSize, setMealSize}) {
   const [open, setOpen] = useState(false);
   // const handleClose = () => setOpen(false);
   const classes = useStyles()
@@ -33,6 +33,7 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
       setSidePrice(mainItem.side[0].price[1].price)
       setDrinkPrice(mainItem.beverage[0].price[1].price)
       setCurrentPrice(mainItem.total_cost.regular)
+      setMealSize('regular')
     }
     else{
       mainItem.side[0].size = 'L'
@@ -40,6 +41,7 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
       setSidePrice(mainItem.side[0].price[2].price)
       setDrinkPrice(mainItem.beverage[0].price[2].price)
       setCurrentPrice(mainItem.total_cost.upsized)
+      setMealSize('upsized')
     }
     setCurrentItems([mainItem.main[0], mainItem.side[0],mainItem.beverage[0]])
     setCategory('sides')
@@ -87,9 +89,14 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
     }
     setOpen(!open)
   };
-      console.log(sidePrice)
+      console.log(mainItem)
   return (
-    <div>
+    <div className='mt-8'>
+            {category !== 'meal' && (
+        <Button variant="outlined" onClick={() => {changeCategory()}} className='p-12 '>
+          Skip / Stay with default
+        </Button>
+      )}
       <Grid container justifyContent="center" spacing={4}>
         <Grid item xs={12} className="justify-items-center">
           <motion.div 
@@ -115,7 +122,7 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
             <Card className={classes.root} elevation={5} variant="outlined" sx={{maxHeight: '16%'}}>
               <a onClick={() => {addMeal('regular')}}>
               <CardActionArea>
-                <CardMedia className={classes.media} image='' title="regular meal" />
+                <CardMedia component='img' image={mainItem.image_url} height='140' alt={mainItem.name} title='regular meal' />
                 <CardContent>
                   <div className={classes.cardContent}>
                     <Typography variant="h6">
@@ -141,7 +148,7 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
             <Card className={classes.root} elevation={5} variant="outlined" sx={{maxHeight: '16%'}}>
               <a onClick={() => {addMeal('upsized')}}>
               <CardActionArea>
-                <CardMedia className={classes.media} image='' title="upsized meal" />
+                <CardMedia component='img' image={mainItem.image_url} height='140' alt={mainItem.name} title="upsized meal" />
                 <CardContent>
                   <div className={classes.cardContent}>
                     <Typography variant="h6">
@@ -167,11 +174,11 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
             transition={{ duration: 1 }} 
             key={index}
           >
-          <Grid item>
+          <Grid item >
             <Card className={classes.root} elevation={5} variant="outlined" sx={{maxHeight: '16%'}}>
               <a onClick={()=> {handleOpen(item, index)}}>
               <CardActionArea>
-                <CardMedia className={classes.media} image='' title={item.name} />
+                <CardMedia component='img' image={item.image_url} height='140' alt={item.name} title={item.name} />
                 <CardContent>
                   <div className={classes.cardContent}>
                     <Typography variant="h6">
@@ -204,7 +211,7 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
                       Pick your size
                     </Typography>
                     {sideItem.price.map((size, i) => (
-                      <Button variant="outlined" key={i} onClick={() => { editMeal(sideItem, size.size, size.price)}}>
+                      <Button variant="outlined" key={i} onClick={() => { editMeal(sideItem, size.size, size.price)}} className="my-8 p-8">
                         {sideItem.name}, {size.size}, ${category === 'sides' ? (size.price - sidePrice).toFixed(2) : (size.price - drinkPrice).toFixed(2)}
                       </Button>
                       ))}
@@ -213,11 +220,6 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
               </Modal>
          )}
       </Grid>
-      {category !== 'meal' && (
-        <Button variant="outlined" onClick={() => {changeCategory()}}>
-          Skip / Stay with default
-        </Button>
-      )}
     </div>
   )
 }

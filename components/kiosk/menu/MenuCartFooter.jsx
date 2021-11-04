@@ -10,12 +10,18 @@ import {
 } from "react-router-dom";
 import {CartContext, SubtotalContext} from '../../../pages/kiosk/index.js'
 
-function MenuCartFooter({currentPrice, setCurrentItems, currentItems, setGoToReview, setCategory, setCurrentPrice}) {
+function MenuCartFooter({currentPrice, setCurrentItems, currentItems, setGoToReview, setCategory, setCurrentPrice, mealSize, meal}) {
   const {cartItems, setCartItems} = useContext(CartContext)
+  console.log(cartItems)
   const {subtotal, setSubtotal} = useContext(SubtotalContext)
     const addToCart = () => {
+    meal.main[0] = currentItems[0]
+    meal.side[0] = currentItems[1]
+    meal.beverage[0] = currentItems[2]
+    meal.type = mealSize
+    meal.price = currentPrice.toFixed(2)
     setSubtotal(subtotal += currentPrice)
-    setCartItems(...cartItems, currentItems)
+    setCartItems([...cartItems, meal])
   }
   const handleReset = () => {
     setCurrentItems([])
@@ -32,7 +38,7 @@ function MenuCartFooter({currentPrice, setCurrentItems, currentItems, setGoToRev
               <Badge badgeContent={1} color="primary">
                 <ShoppingCartIcon color="action" />
                </Badge>
-              <Typography variant="h6" color="initial"> {currentPrice}</Typography>
+              <Typography variant="h6" color="initial"> ${(currentPrice).toFixed(2)}</Typography>
             </Grid>
             <Grid item xs={7}>
               <NavLink to="/menu">
@@ -60,7 +66,7 @@ function MenuCartFooter({currentPrice, setCurrentItems, currentItems, setGoToRev
             <Grid item xs={4}>
             <NavLink to="/menu">
               <Button variant="outlined" className='p-8'> 
-                Cancel Item
+                Cancel
               </Button>
             </NavLink>
           </Grid>

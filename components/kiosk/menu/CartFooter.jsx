@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import {CartContext, SubtotalContext} from '../../../pages/kiosk/index.js'
 
-function Footer() {
+function CartFooter() {
     const {cartItems, setCartItems} = useContext(CartContext)
     const {subtotal, setSubtotal} = useContext(SubtotalContext)
     console.log(cartItems)
@@ -28,4 +28,4 @@ function Footer() {
   )
 }
 
-export default Footer
+export default CartFooter

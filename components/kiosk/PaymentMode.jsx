@@ -11,6 +11,7 @@ import { DineInContext } from '../../pages/kiosk';
 export const PaymentMode = (props) => {
   let location = useLocation()
   const {dineIn, setDineIn} = useContext(DineInContext)
+  const subtotal = location.total
   console.log(dineIn)
   return (
     <div className="pt-8 mt-11">
@@ -26,7 +27,6 @@ export const PaymentMode = (props) => {
         }
         }>
           <div className="p-11">
-            $INSERTICONS
             Credit Card/Mobile Payment
           </div>
         </NavLink>
@@ -46,7 +46,7 @@ export const PaymentMode = (props) => {
     animate={{y: 0, opacity: 1 }} 
     transition={{ duration: 1.5 }}>
         <div className="p-11 shadow-md w-1/2">
-          <p>Subtotal <br />
+          <p className="text-4xl">${subtotal.toFixed(2)} <br />
           </p>
         </div>
       </motion.div>

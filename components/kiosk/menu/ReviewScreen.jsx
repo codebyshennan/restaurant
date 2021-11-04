@@ -14,10 +14,10 @@ import {Modal, Box} from '@mui/material'
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 
-
-function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToReview, setCategory, setCurrentPrice}) {
+function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToReview, setCategory, setCurrentPrice, mealSize, meal}) {
   // const {cartItems, setCartItems} = useContext(CartContext)
   // const {subtotal, setSubtotal} = useContext(SubtotalContext)
   //   const addToCart = () => {
@@ -26,20 +26,27 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
   // }
   const [open, setOpen] = useState(false)
    const [index, setIndex] = useState(0)
-  const [itemToEdit, setItemToEdit] = useState({})
+  const [initialRender, setInitialRender] = useState(true)
    const initialState = JSON.parse(JSON.stringify(currentItems[index]))
   const [currentItem, setCurrentItem] = useState(currentItems[0])
   const [prevItem, setPrevItem] = useState({})
+      console.log(prevItem)
+    console.log(currentItem)
   useEffect(() => {
-    if (prevItem === currentItem && open){
+    if (prevItem === currentItem && open || prevItem === {}){
     setOpen(false)
     }
-    else{
+    else {
+      if (!initialRender) {
       setOpen(true)
+      }
+      else{
+        setInitialRender(false  )
+      }
       setPrevItem(currentItem)
     }
   },[currentItem])
-
+  console.log(open)
   // change to allow sets
   //change to index for diff prices
   const {cartItems, setCartItems} = useContext(CartContext)
@@ -93,23 +100,30 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
     <div className="mt-16 mx-8">
       <Grid container spacing = {3}>
         <Grid item xs={4}>
-          <Typography variant="h6" color="initial">
-            hi
-          </Typography>
+          <div>
+            <Image src={currentItems[0].image_url} height='200' width='200' alt={currentItems[0].name}/>
+          </div>
             <Button variant="outlined" onClick={()=> {setCurrentItem(currentItems[0])}}>
               Customize
             </Button>
         </Grid>
         <Grid item xs={4}>
+          <div>
+            <Image src={currentItems[1].image_url} height='200' width='200' alt={currentItems[1].name}/>
+          </div>
+          {currentItems[1].ingredients !== null && (
             <Button variant="outlined" onClick={()=> {setCurrentItem(currentItems[1])}}>
               Customize
             </Button>
+             )} 
           <Button variant="outlined">
             Change Item
           </Button>
         </Grid>
         <Grid item xs={4}>
-          {/* <NavLink to={{pathname: '/specialrequest', itemProp: currentItems, setItemsProp: setCurrentItems, index: 2}}> */}
+          <div>
+            <Image src={currentItems[2].image_url} height='200' width='200' alt={currentItems[2].name}/>
+          </div>
           {currentItems[2].ingredients !== null && (
             <Button variant="outlined" onClick={()=> {setCurrentItem(currentItems[2])}}>
               Customize
@@ -135,7 +149,7 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
                 { data }
               </div>
               <Typography variant="h6" color="initial">
-               Subtotal: {currentItem.price[0].price.toFixed(2)}
+               
               </Typography>
             </Grid>
           </Grid>
@@ -171,7 +185,7 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
 
           </motion.div>
               </div>)}
-      <MenuCartFooter currentPrice={currentPrice} setCurrentItems={setCurrentItems} setGoToReview={setGoToReview} setCategory={setCategory} setCurrentPrice={setCurrentPrice} currentItems={currentItems} />
+      <MenuCartFooter currentPrice={currentPrice} setCurrentItems={setCurrentItems} setGoToReview={setGoToReview} setCategory={setCategory} setCurrentPrice={setCurrentPrice} currentItems={currentItems} mealSize={mealSize} meal={meal} />
     </div>
   )
 }

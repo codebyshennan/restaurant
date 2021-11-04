@@ -22,7 +22,8 @@ export const MealSelect = (props) => {
   return (
     <div className="pt-8 mt-11">
       <Typography variant="h3" color="initial">Would you like to make this a meal?</Typography>
-      <motion.div className="mt-8"
+      {itemMeal[0] && (
+        <motion.div className="mt-8"
       initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
     transition={{ duration: 0.5 }}>
@@ -38,6 +39,7 @@ export const MealSelect = (props) => {
           </div>
         </Button>
       </motion.div>
+      )}
       <motion.div className="mt-8" initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
     transition={{ duration: 1 }}>

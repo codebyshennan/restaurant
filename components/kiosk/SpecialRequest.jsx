@@ -9,24 +9,22 @@ import {
   NavLink,
   useLocation
 } from "react-router-dom";
-import {CartContext} from '../../pages/kiosk/index.js'
+import {CartContext, SubtotalContext} from '../../pages/kiosk/index.js'
 
 
 export const SpecialRequest = (props) => {
   let location = useLocation()
-  const index = location.index
-  const currentItems = location.itemProp
-  const setCurrentItems = location.setItemsProp
-  console.log(index)
-  console.log(currentItems)
-  console.log(setCurrentItems)
-  const initialState = JSON.parse(JSON.stringify(currentItems[index]))
-  console.log(initialState === currentItems[index])
+  const item = location.itemProp.item
+  console.log(item)
+  const initialState = JSON.parse(JSON.stringify(item[0]))
+  console.log(initialState === item[0])
+  // const initialState = JSON.parse(JSON.stringify(currentItems[index]))
+  // console.log(initialState === currentItems[index])
   // change to allow sets
   //change to index for diff prices
   const {cartItems, setCartItems} = useContext(CartContext)
+  const {subtotal, setSubtotal} = useContext(SubtotalContext)
   const [currentItem, setCurrentItem] = useState(initialState)
-  console.log(currentItem)
   const changeAddons = (itemIndex, didAdd) => {
     if (didAdd && currentItem.ingredients[itemIndex].quantity < currentItem.ingredients[itemIndex].limit) {
       currentItem.ingredients[itemIndex].quantity += 1
@@ -41,8 +39,13 @@ export const SpecialRequest = (props) => {
 
   const handleAddToCart = () => {
     // need to change to allow sets
-    
+    setSubtotal(subtotal += currentItem.price[0].price)
+    if (cartItems === []) {
+      setCartItems(meal)
+    }
+    else{
     setCartItems([...cartItems, currentItem])
+    }
   }
 
   const data = currentItem.ingredients
@@ -119,10 +122,10 @@ export const SpecialRequest = (props) => {
             animate={{y: 0, opacity: 1 }} 
             transition={{ duration: 1.5 }}>
             
-            <NavLink to="/reviewscreen">
+            <NavLink to="/menu">
               <Button variant="error" style={{backgroundColor: '#ff0000', color: '#FFFFFF'}} className="pt-8 shadow-md">
                 <div className="p-11">
-                    Cancel Edit
+                    Cancel
                 </div>
               </Button>
             </NavLink>

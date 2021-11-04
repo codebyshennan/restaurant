@@ -11,8 +11,6 @@ import Image from 'next/image'
 function Lunch() {
   const menuItems = useContext(MenuContext)
   const mealItems = useContext(MealContext)
-  console.log(menuItems)
-  console.log(mealItems)
   const [category, setCategory] = useState("main")
   const [isMain, setIsMain] = useState(true)
   const items = menuItems.filter((item) => {
@@ -21,7 +19,6 @@ function Lunch() {
     }
   })
   
-  console.log(isMain)
   return (
     <>
         <Grid container className = "h-screen w-screen" spacing = {10} justifyContent ="center">
