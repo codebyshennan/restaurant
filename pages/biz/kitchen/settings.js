@@ -40,7 +40,7 @@ const Settings = ({orders}) => {
     <>
       <Navbar />
       <VerticalTabs />
-      <StatusBar />
+      <StatusBar orders = { data }/>
     </>
   )
 }

@@ -8,7 +8,7 @@ const OrderCards = ({orders}) => {
   // orders should have mode of delivery (eat in or take out)
   const CardList = orders.map(order=> {
     return (
-      <li key = { order._id } >
+      <li key = { order._id } className="inline-block m-2 align-top	">
         <NewCard order = { order } />
       </li>
       )

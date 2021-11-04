@@ -22,14 +22,15 @@ const Tracker = ({ordersData}) => {
   // find out how to hot-sync current state with incoming state
   // need to filter differenes
 
+  const openOrders = data && data.filter(order => order.status == "processing")
 
   return (
     <>
       <Navbar />
       <div className="mt-3 ml-3 overflow-x-auto">
-        <OrderCards orders = { data } />
+        <OrderCards orders = { openOrders } />
       </div>
-      <StatusBar orders = {data}/>
+      <StatusBar orders = { data }/>
     </>
   )
 }

@@ -45,27 +45,27 @@ export default function VerticalTabs() {
 
   return (
     <Box
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', marginTop:2 }}
+      sx={{ width: '100%', bgcolor: 'background.paper', display: 'flex', marginTop:2 }}
     >
       <Tabs
         orientation="vertical"
         variant="scrollable"
         value={value}
         onChange={handleChange}
-        aria-label="Vertical tabs example"
+        aria-label=""
         sx={{ borderRight: 1, borderColor: 'divider' }}
       >
         <Tab label="General" {...a11yProps(0)} />
         <Tab label="Timers & Alerts" {...a11yProps(1)} />
         <Tab label="Layout" {...a11yProps(2)} />
       </Tabs>
-      <TabPanel value={value} index={0}>
+      <TabPanel className="w-full" value={value} index={0}>
        <GeneralSettings />
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel className="w-full" value={value} index={1}>
         <TimerSettings />
       </TabPanel> 
-      <TabPanel value={value} index={2}>
+      <TabPanel className="w-full" value={value} index={2}>
         <LayoutSettings />
       </TabPanel>
     </Box>
