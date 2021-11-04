@@ -5,7 +5,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "data:import": "node seeders/seedItems.mjs"
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@emotion/react": "^11.5.0",
