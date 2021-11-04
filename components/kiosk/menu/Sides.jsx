@@ -10,7 +10,7 @@ function Sides() {
   const menuItems = useContext(MenuContext)
   console.log(menuItems)
   const sides = menuItems.filter((item) => {
-    if (item.type ==='side') {
+    if (item.type ==='sides') {
       return item
     }
   })

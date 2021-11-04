@@ -17,31 +17,10 @@ export const SidebarMenu = ({setCategory, setIsMain}) => {
     >
 
       <div className="mt-2 w-auto">
-        <Button variant="success" style={{backgroundColor: '#FFFFFF', color: '#000000'}} className="pt-8 shadow-md" >
-
-
-        <div className="p-3 w-auto">
-          What&apos;s New
-        </div>
-
-      </Button>
-      </div>
-
-      <div className="mt-2 w-auto">
-      <Button variant="error" style={{backgroundColor: '#FFFFFF', color: '#000000'}} className="pt-8 shadow-md">
-
-        <div className="p-3 w-auto">
-          <p>Popular
-          </p>
-        </div>
-
-      </Button>
-      </div>
-
-      <div className="mt-2 w-auto">
         <Button variant="error" style={{backgroundColor: '#FFFFFF', color: '#000000'}} className="pt-8 shadow-md" onClick={() => {setMenu("main", true)}}>
 
         <div className="p-3 w-auto">
+
           <p>Burgers <br />
           </p>
         </div>
@@ -50,7 +29,7 @@ export const SidebarMenu = ({setCategory, setIsMain}) => {
       </div>
 
       <div className="mt-2 w-auto">
-        <Button variant="error" style={{backgroundColor: '#FFFFFF', color: '#000000'}} className="pt-8 shadow-md" onClick={() => {setMenu("side", false)}}>
+        <Button variant="error" style={{backgroundColor: '#FFFFFF', color: '#000000'}} className="pt-8 shadow-md" onClick={() => {setMenu("sides", false)}}>
 
         <div className="p-3 w-auto">
           <p>Sides <br />
@@ -65,6 +44,26 @@ export const SidebarMenu = ({setCategory, setIsMain}) => {
 
         <div className="p-3 w-auto">
           <p>Drinks <br />
+          </p>
+        </div>
+
+      </Button>
+      </div>
+            <div className="mt-2 w-auto">
+        <Button variant="success" style={{backgroundColor: '#FFFFFF', color: '#000000'}} className="pt-8 shadow-md" onClick={() => {setMenu("desserts", false)}}>
+
+
+        <div className="p-3 w-auto">
+          Desserts
+        </div>
+
+      </Button>
+      </div>
+            <div className="mt-2 w-auto">
+      <Button variant="error" style={{backgroundColor: '#FFFFFF', color: '#000000'}} className="pt-8 shadow-md" onClick={() => {setMenu("sharing", false)}}>
+
+        <div className="p-3 w-auto">
+          <p>Sharing
           </p>
         </div>
 
