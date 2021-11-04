@@ -43,11 +43,11 @@ function Item({item, isMain, id,}) {
           pathname: path(),
           itemProp: {item: [item]}
       }}>
-          <CardMedia className={classes.media} image={<Image src="/img/beverages/milk.png" alt="milk" />} title={item.name} />
+          <CardMedia className={classes.media} image={<Image src="/img/beverages/milk.png" alt="milk" layout="fill" objectFit="cover"/>} title={item.name} />
           <CardContent>
             <div className={classes.cardContent}>
               <Typography variant="h6">
-                <Image src="/img/beverages/milk.png" alt="milk" layout="fill" objectFit="cover"/>
+                {item.name}
               </Typography>
               <Typography variant="h6" >
                 {price}
