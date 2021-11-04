@@ -6,6 +6,8 @@ import {
   Link
 } from "react-router-dom";
 import {CartContext, SubtotalContext} from '../../../pages/kiosk/index.js'
+import Image from 'next/image'
+
 
 // on click, set elevation to lower (1 or 0) and set innerBG color to gray
 function Item({item, isMain, id,}) {
@@ -41,11 +43,11 @@ function Item({item, isMain, id,}) {
           pathname: path(),
           itemProp: {item: [item]}
       }}>
-          <CardMedia className={classes.media} image='' title={item.name} />
+          <CardMedia className={classes.media} image={<Image src="/img/beverages/milk.png" alt="milk" />} title={item.name} />
           <CardContent>
             <div className={classes.cardContent}>
               <Typography variant="h6">
-                {item.name}
+                <Image src="/img/beverages/milk.png" alt="milk" layout="fill" objectFit="cover"/>
               </Typography>
               <Typography variant="h6" >
                 {price}

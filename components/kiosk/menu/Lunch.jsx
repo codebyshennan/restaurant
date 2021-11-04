@@ -5,6 +5,8 @@ import SidebarMenu from '../SidebarMenu.jsx'
 import CartFooter from './CartFooter.jsx'
 import { motion } from 'framer-motion'
 import { MenuContext, MealContext } from '../../../pages/kiosk/index.js'
+import Image from 'next/image'
+
 
 function Lunch() {
   const menuItems = useContext(MenuContext)
