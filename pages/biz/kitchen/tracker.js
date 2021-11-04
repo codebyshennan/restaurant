@@ -8,6 +8,7 @@ import StatusBar from '../../../components/biz/kitchen/StatusBar'
 import dbConnection from '../../../lib/mongodb'
 import OrderCards from '../../../components/biz/kitchen/OrderCards'
 import 'tailwindcss/tailwind.css'
+import Grid from '@mui/material/Grid'
 
 const fetcher = (...args) => fetch(...args).then(res=> res.json())
 
@@ -15,12 +16,27 @@ const Tracker = ({ordersData}) => {
 
   // continuously fetch data from server
   const { data, error } = useSWR('/api/kitchen/orders', fetcher, { refreshInterval: 1000 })
+  const Loader = ({message}) => {
+      return (
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{ minHeight: '100vh' }}
+      >
 
-  if (error) return (<div>Failed to load</div>)
-  if (!data) return (<div> Loading... </div>)
+        <Grid item xs={3}>
+        { message == "loading" ? <CircularProgress /> : "Error: Failed to load"}
+        </Grid>   
+        
+      </Grid> 
+      )
+    }
 
-  // find out how to hot-sync current state with incoming state
-  // need to filter differenes
+  if (error) return (<Loader message={"failed"} />)
+  if (!data) return (<Loader message={"loading"} />)
 
   const openOrders = data && data.filter(order => order.status == "processing")
 
