@@ -36,14 +36,14 @@ function Item({item, isMain, id,}) {
     }
   }
   return (
-    <Card className={classes.root} elevation={5} variant="outlined" sx={{maxHeight: '16%'}}>
+    <Card className={classes.root} elevation={5} variant="outlined" sx={{maxHeight: '40%'}}>
       <a onClick={() => {addToCart(item)}}>
       <CardActionArea to={path()}>
         <NavLink to={{
           pathname: path(),
           itemProp: {item: [item]}
       }}>
-          <CardMedia className={classes.media} image={<Image src="/img/beverages/milk.png" alt="milk" layout="fill" objectFit="cover"/>} title={item.name} />
+          <CardMedia component='img' image={item.image_url} height='140' alt={item.name} title={item.name} />
           <CardContent>
             <div className={classes.cardContent}>
               <Typography variant="h6">
