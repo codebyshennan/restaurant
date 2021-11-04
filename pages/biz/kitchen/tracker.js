@@ -1,50 +1,68 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import { useRouter } from 'next/router'
+// import Pusher from 'pusher'
+// import PusherJS from 'pusher-js';
+import useSWR from 'swr'
+import Navbar from '../../../components/biz/kitchen/Navbar'
+import StatusBar from '../../../components/biz/kitchen/StatusBar'
 import dbConnection from '../../../lib/mongodb'
+import OrderCards from '../../../components/biz/kitchen/OrderCards'
+import 'tailwindcss/tailwind.css'
 
-const Tracker = ({orderItems, isConnected}) => {
+const fetcher = (...args) => fetch(...args).then(res=> res.json())
 
-  console.log(isConnected)
-  const [orders, setOrders] = useState([...orderItems])
+const Tracker = ({ordersData}) => {
 
-  const [processing, setProcessing] = useState([])
-  const [completed, setCompleted] = useState([])
-  console.log(orderItems)
+  // continuously fetch data from server
+  const { data, error } = useSWR('/api/kitchen/orders', fetcher, { refreshInterval: 1000 })
 
-  const list = orders.map(order=> {
-    return (
-      <li key={order._id}> {order._id} : {order.name}</li>
-    )
-  })
+  if (error) return (<div>Failed to load</div>)
+  if (!data) return (<div> Loading... </div>)
+
+  // find out how to hot-sync current state with incoming state
+  // need to filter differenes
+
+  const openOrders = data && data.filter(order => order.status == "processing")
 
   return (
-    <div>
-      Order Tracking
-      <ul>
-        {list}
-      </ul>
-    </div>
+    <>
+      <Navbar />
+      <div className="mt-3 ml-3 overflow-x-auto">
+        <OrderCards orders = { openOrders } />
+      </div>
+      <StatusBar orders = { data }/>
+    </>
   )
 }
 
-export const getStaticProps = async() => {
+export default Tracker
+
+
+export const getServerSideProps = async(context) => {
   const client = await dbConnection()
   const db = client.db('fastfood')
-  const orders = await db.collection('orders').find({}).toArray()
+  const data =  await db.collection('meals').aggregate([{
+    $lookup: {
+      from: "items",
+      localField: "side_id",
+      foreignField: "_id",
+      as: "sides"
+    }
+  }, {
+    $lookup: {
+      from: "items",
+      localField: "beverage_id",
+      foreignField: "_id",
+      as: "beverages"
+    }
+  }]).toArray()
 
-  const orderItems = JSON.parse(JSON.stringify(orders))
-  const isConnected = await client.isConnected()
+  const ordersData = JSON.parse(JSON.stringify(data))
 
   return {
     props: {
-      orderItems,
-      isConnected
-    },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every 10 seconds
-    revalidate: 1, // In seconds
+      ordersData
+    }
   }
+
 }
-
-
-export default Tracker

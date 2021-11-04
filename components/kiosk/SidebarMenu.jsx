@@ -20,6 +20,7 @@ export const SidebarMenu = ({setCategory, setIsMain}) => {
         <Button variant="error" style={{backgroundColor: '#FFFFFF', color: '#000000'}} className="pt-8 shadow-md" onClick={() => {setMenu("main", true)}}>
 
         <div className="p-3 w-auto">
+
           <p>Burgers <br />
           </p>
         </div>
