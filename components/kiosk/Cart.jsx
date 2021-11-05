@@ -55,7 +55,7 @@ function Cart() {
           </a>
           <br />
           {/* allow them to update number of items */}
-          {item.price[0].price}
+          {item.price}
           </Grid>
         </Grid>
         )}

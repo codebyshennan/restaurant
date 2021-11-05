@@ -7,18 +7,32 @@ import {
   NavLink,
   useLocation
 } from "react-router-dom";
-import { CompatibleMealContext } from '../../pages/kiosk'
+import { CompatibleMealContext, CartContext, SubtotalContext} from '../../pages/kiosk'
 
 export const MealSelect = (props) => {
   let location = useLocation()
   const item = location.itemProp.item
+  const {cartItems, setCartItems} = useContext(CartContext)
+  const {subtotal, setSubtotal} = useContext(SubtotalContext)
   const meals = useContext(CompatibleMealContext)
-  console.log(item[0]._id)
-  console.log(meals[1].main_id)
   const itemMeal = meals.filter((itemSet) => {
     return itemSet.main_id === item[0]._id
   })
-  console.log(itemMeal)
+  console.log(item.ingredients)
+  const addToCart = () => {
+      const addedItem = JSON.parse(JSON.stringify(item[0]))
+      addedItem.price = addedItem.price[0].price
+      setCartItems([...cartItems, addedItem])
+      subtotal += addedItem.price
+      setSubtotal(subtotal)
+  }
+  const path = () => {
+    if (item.ingredients === undefined){
+      return '/menu'
+    }
+    return '/specialrequest'
+  }
+  
   return (
     <div className="pt-8 mt-11">
       <Typography variant="h3" color="initial">Would you like to make this a meal?</Typography>
@@ -43,8 +57,9 @@ export const MealSelect = (props) => {
       <motion.div className="mt-8" initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
     transition={{ duration: 1 }}>
+      {item.ingredients !== undefined && (
         <NavLink to={
-                {pathname:"/specialrequest",
+                {pathname:path(),
                 itemProp: {item: item}
             }}>
           <Button variant="error" style={{backgroundColor: '#cd5c5c', color: '#FFFFFF'}}className="pt-8 shadow-md">
@@ -55,6 +70,21 @@ export const MealSelect = (props) => {
             </div>
           </Button>
         </NavLink>
+      )}
+        {item.ingredients === undefined && (
+                  <NavLink to={
+                {pathname: path(),
+                itemProp: {item: item}
+            }}>
+          <Button variant="error" style={{backgroundColor: '#cd5c5c', color: '#FFFFFF'}}className="pt-8 shadow-md" onClick={()=> {addToCart()}}>
+            <div className="p-11">
+                <p>No, thank you! <br />
+                <span className="font-extralight">A-la Carte: {item[0].price[0].price} </span>
+                </p> 
+            </div>
+          </Button>
+        </NavLink>
+        )}
       </motion.div>
       <motion.div className="mt-11" initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 

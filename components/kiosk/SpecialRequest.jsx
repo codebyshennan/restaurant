@@ -18,10 +18,6 @@ export const SpecialRequest = (props) => {
   console.log(item)
   const initialState = JSON.parse(JSON.stringify(item[0]))
   console.log(initialState === item[0])
-  // const initialState = JSON.parse(JSON.stringify(currentItems[index]))
-  // console.log(initialState === currentItems[index])
-  // change to allow sets
-  //change to index for diff prices
   const {cartItems, setCartItems} = useContext(CartContext)
   const {subtotal, setSubtotal} = useContext(SubtotalContext)
   const [currentItem, setCurrentItem] = useState(initialState)

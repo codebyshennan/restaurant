@@ -83,7 +83,7 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
     }
   })
     const [sideItem, setSideItem] = useState(items[0])
-    const handleOpen = (item, index) => {
+    const handleOpen = (item) => {
     if (!open) {
       setSideItem(item)
     }
@@ -176,7 +176,7 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
           >
           <Grid item >
             <Card className={classes.root} elevation={5} variant="outlined" sx={{maxHeight: '16%'}}>
-              <a onClick={()=> {handleOpen(item, index)}}>
+              <a onClick={()=> {handleOpen(item)}}>
               <CardActionArea>
                 <CardMedia component='img' image={item.image_url} height='140' alt={item.name} title={item.name} />
                 <CardContent>
