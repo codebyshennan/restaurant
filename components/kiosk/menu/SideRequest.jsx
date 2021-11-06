@@ -76,14 +76,15 @@ function SideRequest() {
             Review
           </motion.div>
          </Grid>
-         <Grid item xs={9}>
+         <Grid item xs={9} className="overflow-y-scroll" sx={{maxHeight: '80vh'}}>
            {category === 'meal' && <ItemSelection category={'meal'}  currentItems={currentItems} setCurrentItems={setCurrentItems} mainItem={orderedMeal} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice} setCategory={setCategory} setSidePrice={setSidePrice} setDrinkPrice={setDrinkPrice} mealSize={mealSize} setMealSize={setMealSize}/>}
 
            {category === 'sides' && <ItemSelection category={'sides'} currentItems={currentItems} setCurrentItems={setCurrentItems} mainItem={orderedMeal.side[0]} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice} setCategory={setCategory} sidePrice={sidePrice} setSidePrice={setSidePrice}/>}
 
            {category === 'beverage' && <ItemSelection category={'beverage'} currentItems={currentItems} setCurrentItems={setCurrentItems} mainItem={orderedMeal.beverage[0]} currentPrice={currentPrice} setCurrentPrice={setCurrentPrice} setGoToReview={setGoToReview} setCategory={setCategory} drinkPrice={drinkPrice} setDrinkPrice={setDrinkPrice} />}
-
-           <MenuCartFooter currentItems={currentItems} currentPrice={currentPrice} setGoToReview={setGoToReview} setCurrentItems={setCurrentItems} setCategory={setCategory} setCurrentPrice={setCurrentPrice} mealSize={mealSize} meal={orderedMeal}/>
+        </Grid>
+        <Grid item xs={12 }>
+          <MenuCartFooter currentItems={currentItems} currentPrice={currentPrice} setGoToReview={setGoToReview} setCurrentItems={setCurrentItems} setCategory={setCategory} setCurrentPrice={setCurrentPrice} mealSize={mealSize} meal={orderedMeal}/>
         </Grid>
       </Grid>
       }

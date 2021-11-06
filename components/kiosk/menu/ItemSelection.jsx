@@ -167,15 +167,14 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
         </Grid>
         )}
         {category !== 'meal' && items.map((item, index) => (
-          <motion.div 
-            className="my-4 px-4 w-1/2 h-1/6" 
+          <Grid item xs={4} key={index}>
+            <motion.div 
             initial={{x: 300, opacity: 0}}
             animate={{x: 0, opacity: 1 }} 
             transition={{ duration: 1 }} 
             key={index}
           >
-          <Grid item >
-            <Card className={classes.root} elevation={5} variant="outlined" sx={{maxHeight: '16%'}}>
+            <Card className={classes.root} elevation={5} variant="outlined">
               <a onClick={()=> {handleOpen(item)}}>
               <CardActionArea>
                 <CardMedia component='img' image={item.image_url} height='140' alt={item.name} title={item.name} />
@@ -195,8 +194,8 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
                 </CardActionArea>
               </a>
             </Card>
+            </motion.div>
           </Grid>
-          </motion.div>
         ))
         }
          {category !== 'meal' && (<Modal
