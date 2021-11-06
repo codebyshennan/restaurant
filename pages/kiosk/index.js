@@ -62,58 +62,63 @@ const App = ({isConnected, menuItems, mealItems, compatibleMealItems}) => {
                 <MealContext.Provider value={mealItems}>
                   <CompatibleMealContext.Provider value={compatibleMealItems}>
                     <SubtotalContext.Provider value={{subtotal, setSubtotal}} >
-              <Route exact path="/">
-                <Splash dineIn={dineIn} setDineIn={setDineIn}/>
-              </Route>
-              <Route path="/menu">
-                <Menu/>
-              </Route>
 
-              <Route path="/mealselect">
-                <MealSelect />
-              </Route>
-              
-              <Route path="/addtocart">
-                <CartPopUp />
-              </Route>
+                      <Route exact path="/">
+                        <Splash dineIn={dineIn} setDineIn={setDineIn}/>
+                      </Route>
 
-              <Route path="/sideselection">
-                <SideSelection />
-              </Route>
-            <DineInContext.Provider value ={{dineIn, setDineIn}}>
-              <Route path="/paymentmode">
-                <PaymentMode />
-              </Route>
+                      <Route path="/menu">
+                        <Menu/>
+                      </Route>
 
-              <Route path="/creditcardpayment">
-                <CreditCardPayment />
-              </Route>
-            </DineInContext.Provider>
+                      <Route path="/mealselect">
+                        <MealSelect />
+                      </Route>
+                      
+                      <Route path="/addtocart">
+                        <CartPopUp />
+                      </Route>
 
-              <Route path="/specialrequest">
-                <SpecialRequest />
-              </Route>
-              <Route path="/siderequest">
-                <SideRequest />
-              </Route>
-              <Route path="/reviewscreen">
-                <ReviewScreen />
-              </Route>
+                      <Route path="/sideselection">
+                        <SideSelection />
+                      </Route>
 
-              <Route path="/cart">
-                <Cart />
-              </Route>
-              <Route path="/paysuccess">
-                <PaymentSuccess />
-              </Route>
-              </SubtotalContext.Provider>
-              </CompatibleMealContext.Provider>
-              </MealContext.Provider>
-            </MenuContext.Provider>
+                    <DineInContext.Provider value ={{dineIn, setDineIn}}>
+                      <Route path="/paymentmode">
+                        <PaymentMode />
+                      </Route>
+
+                      <Route path="/creditcardpayment">
+                        <CreditCardPayment />
+                      </Route>
+                    </DineInContext.Provider>
+
+                      <Route path="/specialrequest">
+                        <SpecialRequest />
+                      </Route>
+
+                      <Route path="/siderequest">
+                        <SideRequest />
+                      </Route>
+
+                      <Route path="/reviewscreen">
+                        <ReviewScreen />
+                      </Route>
+
+                      <Route path="/cart">
+                        <Cart />
+                      </Route>
+
+                      <Route path="/paysuccess">
+                        <PaymentSuccess />
+                      </Route>
+
+                    </SubtotalContext.Provider>
+                  </CompatibleMealContext.Provider>
+                </MealContext.Provider>
+              </MenuContext.Provider>
             </CartContext.Provider>
-
           </Switch>
-          
         </div>
       </Router>
     </div>
@@ -166,21 +171,5 @@ export const getServerSideProps = async(context) => {
     props: { isConnected, menuItems, mealItems, compatibleMealItems},
   }
 }
-
-
-
-
-// export const getStaticProps = async ({ params }) => {
-//   const data = await fetch(`${process.env.APP_DOMAIN}/api/menu/details?item_id=${params.item_id}`)
-//     const item = await data.json()
-  
-//     return {
-//       props: { item },
-//       revalidate: 60 * 60 * 24
-//   }
-    
-// } 
-
-
 
 export default App;

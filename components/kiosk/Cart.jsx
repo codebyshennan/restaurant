@@ -18,9 +18,10 @@ function Cart() {
   const {cartItems, setCartItems} = useContext(CartContext)
   const [newCart, setNewCart] = useState(location.cartProp)
   const {subtotal, setSubtotal} = useContext(SubtotalContext)
-  console.log(cartItems)
+  
   const handleItemNumEdit = (didIncrease, index) => {
     const duplicatedItem = newCart[index]
+
     if(didIncrease) {
       subtotal += duplicatedItem.price
       setNewCart([...newCart, duplicatedItem])
@@ -29,13 +30,15 @@ function Cart() {
       subtotal -= duplicatedItem.price
       setNewCart(newCart.filter((item, idx) => {if (idx !== index) return item}))
     }
-    console.log(subtotal)
-  setSubtotal(subtotal)
+    setSubtotal(subtotal)
   }
+
   const handleCartEdit = () => {
     setCartItems(newCart)
   }
-  const itemData = newCart.map((item, idx) => {return (
+
+  const itemData = newCart.map((item, idx) => {
+    return (
       <div className="mt-4 border-2 p-4 border-opacity-100 font-bold rounded-2xl" key={idx} >
         {item.beverage === undefined && (
            <Grid container spacing={2}>
@@ -83,6 +86,7 @@ function Cart() {
         )}
       </div>
   )})
+  
   return (
     <>
     <div className="pt-2">
