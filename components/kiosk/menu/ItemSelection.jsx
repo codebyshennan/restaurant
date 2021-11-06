@@ -49,23 +49,24 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
   const editMeal = (item, size, itemPrice) => {
         // find what price needed based on size key
         // const priceIncrease = item.price[0].price - currentItems[1][0].price[1].price
+        let priceIncrease = 0
         if (category === 'sides') {
           currentItems[1] = item
-          const priceIncrease = itemPrice - sidePrice
+          priceIncrease = itemPrice - sidePrice
+          console.log(priceIncrease)
           setSidePrice(itemPrice)
         }
         else {
           currentItems[2] = item
-          const priceIncrease = itemPrice - drinkPrice
+          priceIncrease = itemPrice - drinkPrice
+          console.log(priceIncrease)
           setDrinkPrice(itemPrice)
         }
-        console.log(item)
-        console.log(size)
-        console.log(itemPrice)
-        console.log(currentItems)
         setCurrentItems([...currentItems])
         currentPrice += priceIncrease
+        console.log(currentPrice)
         setCurrentPrice(currentPrice)
+        console.log(currentPrice)
         changeCategory()
   }
   const changeCategory = () => {

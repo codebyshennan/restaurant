@@ -46,13 +46,10 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
       setPrevItem(currentItem)
     }
   },[currentItem])
-  console.log(open)
   // change to allow sets
   //change to index for diff prices
   const {cartItems, setCartItems} = useContext(CartContext)
   const changeAddons = (itemIndex, didAdd) => {
-    console.log('changeee')
-    console.log(currentItem.ingredients)
     if (didAdd && currentItem.ingredients[itemIndex].quantity < currentItem.ingredients[itemIndex].limit) {
       currentItem.ingredients[itemIndex].quantity += 1
       currentItem.price[0].price += currentItem.ingredients[itemIndex].price_per_unit
@@ -68,7 +65,6 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
     setCurrentItems([...currentItems, currentItem])
     setOpen(false)
   }
-  console.log(currentItems)
 
   const data = currentItem.ingredients
                 .map((ingredient, idx)=>{

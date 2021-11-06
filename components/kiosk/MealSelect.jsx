@@ -22,7 +22,6 @@ export const MealSelect = (props) => {
   const itemMeal = meals.filter((itemSet) => {
     return itemSet.main_id === item[0]._id
   })
-  console.log(itemMeal[0])
   const addToCart = () => {
       const addedItem = JSON.parse(JSON.stringify(item[0]))
       addedItem.price = addedItem.price[0].price
