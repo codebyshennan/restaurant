@@ -66,6 +66,13 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
     setOpen(false)
   }
 
+  const handleResetEdit = () => {
+    setCurrentItem(initialState)
+    setOpen(false)
+  }
+
+  console.log(open)
+
   const data = currentItem.ingredients
                 .map((ingredient, idx)=>{
                   return ( 
@@ -176,7 +183,7 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
             animate={{y: 0, opacity: 1 }} 
             transition={{ duration: 1.5 }}>
             
-              <Button variant="error" style={{backgroundColor: '#ff0000', color: '#FFFFFF'}} className="pt-8 shadow-md">
+              <Button variant="error" style={{backgroundColor: '#ff0000', color: '#FFFFFF'}} className="pt-8 shadow-md" onClick={() => {handleResetEdit()}}>
                 <div className="p-11">
                     Cancel Edit
                 </div>
@@ -184,7 +191,9 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
 
           </motion.div>
               </div>)}
-      <MenuCartFooter currentPrice={currentPrice} setCurrentItems={setCurrentItems} setGoToReview={setGoToReview} setCategory={setCategory} setCurrentPrice={setCurrentPrice} currentItems={currentItems} mealSize={mealSize} meal={meal} />
+      <div className="mt-11">
+        <MenuCartFooter currentPrice={currentPrice} setCurrentItems={setCurrentItems} setGoToReview={setGoToReview} setCategory={setCategory} setCurrentPrice={setCurrentPrice} currentItems={currentItems} mealSize={mealSize} meal={meal} />
+      </div>
     </div>
   )
 }
