@@ -98,6 +98,9 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
 
   return (
     <div className="mt-16 mx-8">
+      <Typography variant="h5" color="initial">
+        Review
+      </Typography>
       <Grid container spacing = {3}>
         <Grid item xs={4}>
           <div>

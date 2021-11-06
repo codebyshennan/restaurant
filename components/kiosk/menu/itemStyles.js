@@ -5,7 +5,6 @@ export default makeStyles(() => ({
     maxWidth: '100%'
   },
   meal: {
-    marginLeft: '11rem',
   },
   media: {
     height: 0,

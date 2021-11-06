@@ -40,20 +40,19 @@ export const MealSelect = (props) => {
   return (
     <div className="pt-8 mt-11">
       <Typography variant="h3" color="initial">Would you like to make this a meal?</Typography>
-      <Grid container>
+      <div className="flex flex-row justify-evenly">
       {itemMeal[0] && (
-      <Grid item>
-        <motion.div className="mt-8"
+        <motion.div className="mt-8 w-1/2 h-1/2 ml-24"
         initial={{y: -50, opacity: 0}}
         animate={{y: 0, opacity: 1 }} 
         transition={{ duration: 0.5 }}>
-          <Card className={classes.meal} elevation={5} variant="outlined" sx={{maxHeight: '40%'}}>
+          <Card className={classes.meal} elevation={5} variant="outlined" sx={{width: '80%'}}>
         <CardActionArea>
           <NavLink to={
                   {pathname:"/siderequest",
                   itemProp: {itemMeal: itemMeal[0]}
               }}>
-            <CardMedia component='img' image={itemMeal[0].image_url} height='140' alt={itemMeal[0].name} title={itemMeal[0].name} />
+            <CardMedia component='img' image={itemMeal[0].image_url} height='140' width='140' alt={itemMeal[0].name} title={itemMeal[0].name} />
             <CardContent>
               <div className={classes.cardContent}>
                 <Typography variant="h6">
@@ -68,20 +67,18 @@ export const MealSelect = (props) => {
         </CardActionArea>
       </Card>
         </motion.div>
-      </Grid>
       )}
       {item.ingredients !== undefined && (
-        <motion.div className="mt-8" initial={{y: -50, opacity: 0}}
+        <motion.div className="mt-8 w-1/2 h-1/2 ml-24" initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
     transition={{ duration: 1 }}>
-         <Grid item>
-        <Card className={classes.meal} elevation={5} variant="outlined" sx={{maxHeight: '40%'}}>
+        <Card className={classes.meal} elevation={5} variant="outlined" sx={{width: '80%'}}>
       <CardActionArea className="pt-8">
         <NavLink to={
                 {pathname: '/specialrequest',
                 itemProp: {item: item}
             }}>
-          <CardMedia component='img' image={item[0].image_url} height='140' alt={item[0].name} title={item[0].name}  />
+          <CardMedia component='img' image={item[0].image_url} height='140' width='140' alt={item[0].name} title={item[0].name}  />
           <CardContent>
             <div className={classes.cardContent}>
               <Typography variant="h6">
@@ -95,15 +92,13 @@ export const MealSelect = (props) => {
         </NavLink>
       </CardActionArea>
     </Card>
-    </Grid>
         </motion.div>
       )}
         {item.ingredients === undefined && (
-          <Grid item>
-            <motion.div className="mt-8" initial={{y: -50, opacity: 0}}
+            <motion.div className="mt-8 w-1/2 h-1/2 ml-24" initial={{y: -50, opacity: 0}}
             animate={{y: 0, opacity: 1 }} 
             transition={{ duration: 1 }}>
-             <Card className={classes.meal} elevation={5} variant="outlined"  sx={{maxHeight: '40%'}}>
+             <Card className={classes.meal} elevation={5} variant="outlined" sx={{width: '80%'}}>
               <CardActionArea className="pt-8">
                 <a onClick={()=> {addToCart()}}>
                   <NavLink to={
@@ -126,9 +121,8 @@ export const MealSelect = (props) => {
               </CardActionArea>
             </Card>
           </motion.div>
-        </Grid>
         )}
-        </Grid>
+        </div>
       <motion.div className="mt-11" initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
     transition={{ duration: 1.5 }}>
