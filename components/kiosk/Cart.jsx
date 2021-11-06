@@ -21,13 +21,12 @@ function Cart() {
   console.log(cartItems)
   const handleItemNumEdit = (didIncrease, index) => {
     const duplicatedItem = newCart[index]
-    console.log(duplicatedItem)
     if(didIncrease) {
-      subtotal += duplicatedItem.price[0].price
+      subtotal += duplicatedItem.price
       setNewCart([...newCart, duplicatedItem])
     }
     else {
-      subtotal -= duplicatedItem.price[0].price
+      subtotal -= duplicatedItem.price
       setNewCart(newCart.filter((item, idx) => {if (idx !== index) return item}))
     }
     console.log(subtotal)
