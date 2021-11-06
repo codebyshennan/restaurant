@@ -9,12 +9,14 @@ const DiningIcon = ({type}) => {
 
     if (type == "main") {
       return <LunchDiningIcon />
-    } else if (type == "side") {
+    } else if (type == "sides") {
       return <LocalPizzaIcon />
     } else if(type == "beverage") {
       return <LocalBarIcon />
     } else if (type == "desserts") {
       return <CakeIcon />
+    } else {
+      return null
     }
   }
 

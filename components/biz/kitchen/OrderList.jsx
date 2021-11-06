@@ -30,7 +30,7 @@ const OrderList = ( { orderList } ) => {
                       <ListItemText
                         primary = { item.name }
                         secondary = { <ul>
-                          { item.ingredients.map(ingredient => {
+                          { item.ingredients && item.ingredients.map(ingredient => {
                               return ingredient.quantity > 0 
                               &&
                                (<li key={ingredient.name}> {ingredient.name} x { ingredient.quantity} </li>)

@@ -9,6 +9,8 @@ import dbConnection from '../../../lib/mongodb'
 import OrderCards from '../../../components/biz/kitchen/OrderCards'
 import 'tailwindcss/tailwind.css'
 import Grid from '@mui/material/Grid'
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 const fetcher = (...args) => fetch(...args).then(res=> res.json())
 
@@ -43,7 +45,7 @@ const Tracker = ({ordersData}) => {
   return (
     <>
       <Navbar />
-      <div className="mt-3 ml-3 overflow-x-auto">
+      <div className="mt-3 ml-3 h-screen overflow-x-auto whitespace-nowrap">
         <OrderCards orders = { openOrders } />
       </div>
       <StatusBar orders = { data }/>
