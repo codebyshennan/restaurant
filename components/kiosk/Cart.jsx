@@ -21,13 +21,12 @@ function Cart() {
   console.log(cartItems)
   const handleItemNumEdit = (didIncrease, index) => {
     const duplicatedItem = newCart[index]
-    console.log(duplicatedItem)
     if(didIncrease) {
-      subtotal += duplicatedItem.price[0].price
+      subtotal += duplicatedItem.price
       setNewCart([...newCart, duplicatedItem])
     }
     else {
-      subtotal -= duplicatedItem.price[0].price
+      subtotal -= duplicatedItem.price
       setNewCart(newCart.filter((item, idx) => {if (idx !== index) return item}))
     }
     console.log(subtotal)
@@ -37,7 +36,7 @@ function Cart() {
     setCartItems(newCart)
   }
   const itemData = newCart.map((item, idx) => {return (
-      <div className="m-12 border-2 p-8 border-opacity-100 font-bold rounded-2xl" key={idx} >
+      <div className="mt-4 border-2 p-4 border-opacity-100 font-bold rounded-2xl" key={idx} >
         {item.beverage === undefined && (
            <Grid container spacing={2}>
           <Grid item xs={4}>
@@ -55,7 +54,7 @@ function Cart() {
           </a>
           <br />
           {/* allow them to update number of items */}
-          {item.price[0].price}
+          {item.price}
           </Grid>
         </Grid>
         )}
@@ -86,9 +85,11 @@ function Cart() {
   )})
   return (
     <>
-    <div className="pt-8 mt-11">
-      <Typography variant="h3" color="initial">Please select your mode of payment</Typography>
-      {itemData}
+    <div className="pt-2">
+      <Typography variant="h3" color="initial">Your cart</Typography>
+      <div className="overflow-y-auto px-8 h-80 border-solid border-4">
+        {itemData}
+      </div>
       <div>
         <motion.div className="flex justify-between mx-64 my-16 font-semibold" initial={{y: -50, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
@@ -117,8 +118,8 @@ function Cart() {
         total:subtotal * 1.17
       }
       }>
-        <Button variant="text" style={{backgroundColor: '#ffae42', color: '#000000'}} className="pt-8 shadow-md" onClick={() => {handleCartEdit()}}>
-        <div className="p-11">
+        <Button variant="text" style={{backgroundColor: '#ffae42', color: '#000000'}} className=" shadow-md" onClick={() => {handleCartEdit()}}>
+        <div className="p-6">
             Proceed to Payment
         </div>
         </Button>
@@ -127,15 +128,13 @@ function Cart() {
       <motion.div className="mt-11" initial={{y: -50, opacity: 0}}
             animate={{y: 0, opacity: 1 }} 
             transition={{ duration: 2.5 }}>
-            
             <NavLink to="/menu">
-              <Button variant="error" style={{backgroundColor: '#ff0000', color: '#FFFFFF'}} className="pt-8 shadow-md" onClick={() => {handleCartEdit()}}>
-                <div className="p-11">
+              <Button variant="error" style={{backgroundColor: '#ff0000', color: '#FFFFFF'}} className=" shadow-md" onClick={() => {handleCartEdit()}}>
+                <div className="p-6">
                     Back to Menu
                 </div>
               </Button>
             </NavLink>
-
           </motion.div>
       </div>
     </div>

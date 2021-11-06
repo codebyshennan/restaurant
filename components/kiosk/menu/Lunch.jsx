@@ -18,7 +18,7 @@ function Lunch() {
       return item
     }
   })
-  
+
   return (
     <>
         <Grid container className = "h-screen w-screen" spacing = {10} justifyContent ="center">
@@ -28,18 +28,17 @@ function Lunch() {
           <Grid item xs={9} sx={{maxHeight: '80vh'}} className="overflow-y-scroll">
             <Grid container justifyContent="center" spacing={4}>
               {items.map((item) => (
-                <motion.div 
-                  className="my-4 px-4 w-1/2 overflow-hidden h-1/6" 
+                 <Grid item xs={4} key={item._id}>
+                   <motion.div 
                   initial={{x: 300, opacity: 0}}
                   animate={{x: 0, opacity: 1 }} 
                   transition={{ duration: 1 }} 
-                  key={item._id}
                 >
-                <Grid item>
                   <Item item={item} id={item._id}
                   isMain={isMain}/>
+                  </motion.div>
                 </Grid>
-                </motion.div>
+
               ))}
             </Grid>
           </Grid>

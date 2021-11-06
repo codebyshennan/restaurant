@@ -4,6 +4,8 @@ export default makeStyles(() => ({
     root: {
     maxWidth: '100%'
   },
+  meal: {
+  },
   media: {
     height: 0,
   },

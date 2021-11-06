@@ -27,7 +27,7 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
   const [open, setOpen] = useState(false)
    const [index, setIndex] = useState(0)
   const [initialRender, setInitialRender] = useState(true)
-   const initialState = JSON.parse(JSON.stringify(currentItems[index]))
+  const [initialState, setInitialState] = useState()
   const [currentItem, setCurrentItem] = useState(currentItems[0])
   const [prevItem, setPrevItem] = useState({})
       console.log(prevItem)
@@ -46,13 +46,10 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
       setPrevItem(currentItem)
     }
   },[currentItem])
-  console.log(open)
   // change to allow sets
   //change to index for diff prices
   const {cartItems, setCartItems} = useContext(CartContext)
   const changeAddons = (itemIndex, didAdd) => {
-    console.log('changeee')
-    console.log(currentItem.ingredients)
     if (didAdd && currentItem.ingredients[itemIndex].quantity < currentItem.ingredients[itemIndex].limit) {
       currentItem.ingredients[itemIndex].quantity += 1
       currentItem.price[0].price += currentItem.ingredients[itemIndex].price_per_unit
@@ -68,7 +65,25 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
     setCurrentItems([...currentItems, currentItem])
     setOpen(false)
   }
-  console.log(currentItems)
+
+  const handleResetEdit = () => {
+    setCurrentItem(initialState)
+    setOpen(false)
+  }
+
+  const handleCustomise = (index) => {
+    if(!open){
+    setCurrentItem(currentItems[index])
+    setInitialState(JSON.parse(JSON.stringify(currentItems[index])))
+    setOpen(true)
+    }
+    else {
+      setOpen(false)
+    }
+  }
+
+  console.log(open)
+  console.log(initialState)
 
   const data = currentItem.ingredients
                 .map((ingredient, idx)=>{
@@ -98,12 +113,15 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
 
   return (
     <div className="mt-16 mx-8">
+      <Typography variant="h5" color="initial">
+        Review
+      </Typography>
       <Grid container spacing = {3}>
         <Grid item xs={4}>
           <div>
             <Image src={currentItems[0].image_url} height='200' width='200' alt={currentItems[0].name}/>
           </div>
-            <Button variant="outlined" onClick={()=> {setCurrentItem(currentItems[0])}}>
+            <Button variant="outlined" onClick={()=> {handleCustomise(0)}}>
               Customize
             </Button>
         </Grid>
@@ -112,11 +130,14 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
             <Image src={currentItems[1].image_url} height='200' width='200' alt={currentItems[1].name}/>
           </div>
           {currentItems[1].ingredients !== null && (
-            <Button variant="outlined" onClick={()=> {setCurrentItem(currentItems[1])}}>
+            <Button variant="outlined" onClick={()=> {handleCustomise(1)}}>
               Customize
             </Button>
              )} 
-          <Button variant="outlined">
+          <Button variant="outlined" onClick = {() => {
+            setCategory('sides')
+            setGoToReview(false)
+          }}>
             Change Item
           </Button>
         </Grid>
@@ -125,20 +146,21 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
             <Image src={currentItems[2].image_url} height='200' width='200' alt={currentItems[2].name}/>
           </div>
           {currentItems[2].ingredients !== null && (
-            <Button variant="outlined" onClick={()=> {setCurrentItem(currentItems[2])}}>
+            <Button variant="outlined" onClick={()=> {handleCustomise(2)}}>
               Customize
             </Button>
           )}   
-          <Button variant="outlined">
+          <Button variant="outlined" onClick = {() => {
+            setCategory('beverage')
+            setGoToReview(false)
+          }}>
             Change Item
           </Button>
         </Grid>
       </Grid>
       {open && (<div
-                className="pt-8 mt-11"
-              >
+                className="pt-8 mt-11" sx={{height: '40vh'}}>
                   <Typography variant="h3" color="initial">Any Special Requests?</Typography>
-        {/* {location.itemProp.item.map((item, i) =>)} */}
           <Grid container
             direction="row"
             justifyContent="center"
@@ -153,19 +175,10 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
               </Typography>
             </Grid>
           </Grid>
-
-           {/* <motion.div className="mt-11" initial={{y: -50, opacity: 0}}
-            animate={{y: 0, opacity: 1 }} 
-            transition={{ duration: 1 }}>
-
-           </motion.div> */}
-
           <motion.div className="mt-11" initial={{y: -50, opacity: 0}}
             animate={{y: 0, opacity: 1 }} 
             transition={{ duration: 1.5 }}>
-
-
-            <Button variant="success" style={{backgroundColor: '#009900', color: '#FFFFFF'}} className="pt-8 shadow-md" onClick={() => { handleFinishEdit(currentItem)}}>
+            <Button variant="success" style={{backgroundColor: '#009900', color: '#FFFFFF'}} className="pt-8 shadow-md" onClick={() => {handleFinishEdit()}}>
             <div className="p-11">
                   I'm done customising
             </div>
@@ -177,15 +190,17 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
             animate={{y: 0, opacity: 1 }} 
             transition={{ duration: 1.5 }}>
             
-              <Button variant="error" style={{backgroundColor: '#ff0000', color: '#FFFFFF'}} className="pt-8 shadow-md">
+              <Button variant="error" style={{backgroundColor: '#ff0000', color: '#FFFFFF'}} className="pt-8 shadow-md" onClick={() => {handleResetEdit()}}>
                 <div className="p-11">
-                    Cancel Edit
+                    Reset Ingredients
                 </div>
               </Button>
 
           </motion.div>
               </div>)}
-      <MenuCartFooter currentPrice={currentPrice} setCurrentItems={setCurrentItems} setGoToReview={setGoToReview} setCategory={setCategory} setCurrentPrice={setCurrentPrice} currentItems={currentItems} mealSize={mealSize} meal={meal} />
+      <div className="mt-11">
+        <MenuCartFooter currentPrice={currentPrice} setCurrentItems={setCurrentItems} setGoToReview={setGoToReview} setCategory={setCategory} setCurrentPrice={setCurrentPrice} currentItems={currentItems} mealSize={mealSize} meal={meal} />
+      </div>
     </div>
   )
 }

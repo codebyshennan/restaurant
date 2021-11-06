@@ -12,8 +12,8 @@ import {CartContext, SubtotalContext} from '../../../pages/kiosk/index.js'
 
 function MenuCartFooter({currentPrice, setCurrentItems, currentItems, setGoToReview, setCategory, setCurrentPrice, mealSize, meal}) {
   const {cartItems, setCartItems} = useContext(CartContext)
-  console.log(cartItems)
   const {subtotal, setSubtotal} = useContext(SubtotalContext)
+  console.log(currentPrice)
     const addToCart = () => {
     meal.main[0] = currentItems[0]
     meal.side[0] = currentItems[1]
@@ -30,7 +30,7 @@ function MenuCartFooter({currentPrice, setCurrentItems, currentItems, setGoToRev
     setCurrentPrice(0.00)
   }
   return (
-    <div className='mt-5'>
+    <div className='mx-3'>
       <Grid container direction="column">
         <Grid item xs={6}>
           <Grid container >
@@ -42,7 +42,7 @@ function MenuCartFooter({currentPrice, setCurrentItems, currentItems, setGoToRev
             </Grid>
             <Grid item xs={7}>
               <NavLink to="/menu">
-              <Button variant="outlined" className='p-8' onClick={() => {addToCart()}}>
+              <Button variant="outlined" className='p-6' onClick={() => {addToCart()}}>
                 Add to Cart
               </Button>
               </NavLink>
@@ -50,7 +50,7 @@ function MenuCartFooter({currentPrice, setCurrentItems, currentItems, setGoToRev
           </Grid>
         </Grid>
         <Grid item xs={6}>
-          <Grid container >
+          <Grid container spacing={10} >
            <Grid item xs={4}>
               <Button variant="outlined" className='p-6' onClick={() => {
                 handleReset()
@@ -59,13 +59,13 @@ function MenuCartFooter({currentPrice, setCurrentItems, currentItems, setGoToRev
               </Button>
             </Grid>
             <Grid item xs={4}>
-              <Button variant="outlined" className='p-8'>
+              <Button variant="outlined" className='p-6'>
                 Reach Mode
               </Button>
             </Grid>
             <Grid item xs={4}>
             <NavLink to="/menu">
-              <Button variant="outlined" className='p-8'> 
+              <Button variant="outlined" className='p-6'> 
                 Cancel
               </Button>
             </NavLink>
