@@ -76,11 +76,13 @@ function CreditCardPayment() {
       initial={{y: -100, opacity: 0}}
     animate={{y: 0, opacity: 1 }} 
     transition={{ duration: 2 }}>
+      <NavLink to="/cart">
         <Button variant="error" style={{backgroundColor: '#fe6f5e', color: '#000000'}} className="pt-8 shadow-md">
         <div className="p-11">
-          Cancel Item
+          Back To Cart
         </div>
       </Button>
+      </NavLink>
       </motion.div>
     </div>
   )
