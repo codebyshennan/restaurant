@@ -14,6 +14,7 @@ import MenuCartFooter from './MenuCartFooter.jsx';
 import MealSelect from '../MealSelect.jsx'
 import ReviewScreen from './ReviewScreen.jsx'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import Typography from '@mui/material/Typography'
 
 function SideRequest() {
   let location = useLocation()
@@ -41,12 +42,17 @@ function SideRequest() {
           transition={{ duration: 1 }}>
             {category === 'meal' && (
             <div className='p-2 font-mono text-black border-4 border-solid border-gray-50 bg-white'>
-            Meal  
+              <Typography variant="h6" color="initial">
+                Meal 
+              </Typography> 
             </div>
             )}
             {category !== 'meal' && (
             <div className=' p-2 font-mono border-4 border-solid  bg-green-500 border-gray-50 text-white'>
-            <CheckCircleIcon /> Meal  
+            <CheckCircleIcon /> 
+            <Typography variant="h6" color="initial">
+            Meal  
+            </Typography> 
             </div>
             )}
           </motion.div>
@@ -56,13 +62,17 @@ function SideRequest() {
           transition={{ duration: 1 }}>
             {category !== 'beverage' && !goToReview && (
             <div className='p-2 font-mono text-black border-4 border-solid border-gray-50 bg-white'>
-            Side
+            <Typography variant="h6" color="initial">
+            Side  
+            </Typography>
             </div>
             )}
             {category === 'beverage' && (
              <div className='p-2 font-mono border-4 border-solid bg-green-500 border-gray-50 text-white'>
                <CheckCircleIcon />
-            Side
+            <Typography variant="h6" color="initial">
+            Side  
+            </Typography>
               <div>
               {currentItems[1].name}
               <br />
@@ -80,13 +90,17 @@ function SideRequest() {
           transition={{ duration: 1 }}>
             {!goToReview && (
             <div className='p-2 font-mono text-black border-4 border-solid border-gray-50 bg-white'>
-            Drink
+            <Typography variant="h6" color="initial">
+            Drink  
+            </Typography>
             </div>
             )}
             {goToReview && (
              <div className='p-2 font-mono border-4 border-solid bg-green-500 border-gray-50 text-white'>
                <CheckCircleIcon />
-            Drink
+            <Typography variant="h6" color="initial">
+            Drink  
+            </Typography>
               <div>
               {currentItems[2].name}
               <br />
@@ -104,12 +118,16 @@ function SideRequest() {
           transition={{ duration: 1 }}>
              {goToReview && (
             <div className='p-2 font-mono text-black border-4 border-solid border-gray-50'>
-            Review
+            <Typography variant="h6" color="initial">
+            Review  
+            </Typography>
             </div>
             )}
             {!goToReview && (
              <div className='p-2 font-mono border-4 border-solid border-gray-50 text-black'>
-              Review
+              <Typography variant="h6" color="initial">
+            Review  
+            </Typography>
             </div>
             )}
           </motion.div>

@@ -85,7 +85,7 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
   console.log(open)
   console.log(initialState)
 
-  const data = currentItem.ingredients
+  const data = currentItem.ingredients && currentItem.ingredients
                 .map((ingredient, idx)=>{
                   return ( 
                       <Grid container key={idx} >
@@ -168,7 +168,7 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
             spacing={3}>
             <Grid item xs>
               <div className="mt-8 shadow-lg rounded-3xl">
-                { data }
+                { data } 
               </div>
               <Typography variant="h6" color="initial">
                
