@@ -67,7 +67,7 @@ const ShowQueue = () => {
             </Typography>
 
             <Divider />
-                        {JSON.stringify(readyForCollection)}
+              {JSON.stringify(readyForCollection)}
           </Item>
         </Grid>
         <Grid item xs={6}>

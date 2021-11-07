@@ -13,20 +13,33 @@ import ListSubheader from '@mui/material/ListSubheader';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import OrderList from '../../../components/biz/kitchen/OrderList'
 import HelpIcon from '@mui/icons-material/Help';
-
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 // LUXON
 import { DateTime } from 'luxon'
 
 const NewCard = ( { order } ) => {
 
+  // clicking header has three states: info, confirmation, complete
   const [confirmClick, setConfirmClick] = useState(false)
   const [completeOrder, setCompleteOrder] = useState(false)
+  
+
+
+  // order state
+  const [orderCompletion, setOrderCompletion] = useState(order.order_list)
 
   const dateString = DateTime.fromISO(order.created_at).toFormat('MMMM dd, yyyy')
   const timeString = DateTime.fromISO(order.created_at).toLocaleString(DateTime.TIME_SIMPLE)
 
   const handleOnClick = (event) => {
     setConfirmClick(!confirmClick)
+  }
+
+  const handleOrderCompletion = () => {
+    setCompleteOrder(true)
+    setTimeout(async()=> {
+      await fetch('/api/kitchen/orders', {method: 'DELETE', body: order._id})
+    }, 1000)
   }
 
   const DefaultHeader = () => {
@@ -49,22 +62,22 @@ const NewCard = ( { order } ) => {
               { order.mode == 'delivery' ? <DeliveryDiningIcon /> : <RestaurantIcon /> }
             </Avatar>
           }
-          onClick={handleOnClick}
+          onClick= { handleOnClick }
         />
     )
   }
 
-  const Confirmation = () => {
+  const ConfirmationHeader = () => {
     return (
       <CardHeader
           className="bg-green-500"
           title={
-            <Typography className="text-white" variant="h5" component={"div"}>
+            <Typography className="text-white" variant="h5" component={"div"} onClick = { handleOrderCompletion }>
               Complete Order
             </Typography>
           }
           subheader={
-            <Typography className="text-white" variant="overline" component={"div"}>
+            <Typography className="text-white" variant="overline" component={"div"} onClick={handleOnClick}>
               Cancel
             </Typography>
           } // date of receipt
@@ -73,16 +86,36 @@ const NewCard = ( { order } ) => {
               <HelpIcon />
             </Avatar>
           }
-          onClick={handleOnClick}
+          onClick = { handleOnClick }
+        />
+    )
+  }
+
+  const CompletionHeader = () => {
+    return (
+      <CardHeader
+          className="bg-green-500"
+          title={
+            <Typography className="text-white" variant="h5" component={"div"}>
+            Order Completed
+            </Typography>
+          }
+          avatar={
+            <Avatar sx={{ bgcolor: white }} aria-label="recipe">
+              <CheckCircleOutlineIcon />
+            </Avatar>
+          }
         />
     )
   }
 
   return (
     
-      <Card sx={{ width: 275 }}>
-        { confirmClick ? <Confirmation /> : <DefaultHeader />}
+      <Card sx={{ width: 275 }} id={order._id}>
+
+        { confirmClick ? <ConfirmationHeader /> : ( completeOrder ? <CompletionHeader /> : <DefaultHeader />) }
         <Divider />
+
         <CardContent>
           
           <Typography sx={{marginBottom: 1, lineHeight: 1}} variant="h5" component={"div"}>
@@ -98,18 +131,22 @@ const NewCard = ( { order } ) => {
             {'  '}
 
           </Typography>
+
           <Divider variant="middle" />
+
         </CardContent>
 
         <Grid container>
+
           <Grid item>
+
             <List sx={{ width: '100%' }} subheader={
               <ListSubheader component="div" id="nested-list-subheader">
                 ITEMS
               </ListSubheader>
               }>
 
-              <OrderList orderList = { order.order_list } />
+              <OrderList orderCompletion = { orderCompletion } setOrderCompletion = { setOrderCompletion } />
 
             </List>
           </Grid>

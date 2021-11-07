@@ -10,9 +10,14 @@ import { DateTime } from 'luxon'
 
 const StatusBar = ({orders}) => {
 
-  const openOrders = orders && orders.filter(order=> order.status == "processing")
+  const openOrders = orders && orders.filter(order=> order.status == "processing" 
+  && DateTime.fromISO(order.created_at).toFormat('MMMM dd, yyyy') == DateTime.now().toFormat('MMMM dd, yyyy'))
+
   const openOrdersQty = orders && openOrders.length
-  const closedOrders = orders && orders.filter(order => order.status == "completed")
+
+  const closedOrders = orders && orders.filter(order => order.status == "completed" 
+  && DateTime.fromISO(order.created_at).toFormat('MMMM dd, yyyy') == DateTime.now().toFormat('MMMM dd, yyyy'))
+
   const closedOrdersQty = orders && closedOrders.length
 
   const fulfilmentTime = orders && closedOrders.reduce((accumulator, current)=> {
@@ -23,8 +28,14 @@ const StatusBar = ({orders}) => {
       timeTaken = completedTime.diff(orderedTime).toObject()
     } 
 
-    return accumulator + timeTaken.milliseconds/1000/60
-  }, 0) / closedOrdersQty
+    return accumulator + timeTaken.milliseconds/60000
+  }, 0) / (closedOrdersQty || 1)
+
+  const fulfilmentRate = (() => {
+    const openingHoursObj = {...DateTime.now().toObject(), "hour": 9, "minute":0, "second": 0}
+    const elapsedHours = DateTime.now().diff(DateTime.fromObject(openingHoursObj, {zone: 'Asia/Singapore'})).hours
+    return closedOrdersQty/ (elapsedHours || 1 )
+  })()
 
   return (
     <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
@@ -47,9 +58,9 @@ const StatusBar = ({orders}) => {
       <BottomNavigationAction
         label="Fulfilment Rate"
         value="fulfilmentRate"
-        icon={"16.4/hr"}
+        icon={fulfilmentRate+"/hr"}
       />
-      <BottomNavigationAction label="Avg Time" value="folder" icon={fulfilmentTime} />
+      <BottomNavigationAction label="Avg Time" value="folder" icon={fulfilmentTime.toFixed(2) +"min/order"} />
     </BottomNavigation>
     </Paper>
   )

@@ -5,21 +5,24 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider'
 import ListItemButton from '@mui/material/ListItemButton'
+import Typography from '@mui/material/Typography'
 
 import DiningIcon from '../../../components/biz/kitchen/DiningIcon'
 
-const OrderList = ( { orderList } ) => {
+const OrderList = ( { orderCompletion, setOrderCompletion } ) => {
 
 
-  const handleOnClick = (event) => {
-    console.log(event)
+  const handleOnClick = (index) => {
+    const tempList = [...orderCompletion]
+    tempList.splice(index,1)
+    setOrderCompletion(tempList)
     // await fetch('/api/kitchen/updateOrderItem', { method:"UPDATE", body})
   }
 
 
-  const list = orderList.map( item => {
+  const list = orderCompletion.map( (item, idx) => {
                 return (
-                    <ListItemButton selected={ item.status == "completed"} key = { item._id } altKey = { item._id } onClick={handleOnClick} >
+                    <ListItemButton style={{width: '17rem'}} selected={ item.status == "completed"} key = { item._id+idx } onClick={()=> handleOnClick(idx)} >
 
                       <ListItemAvatar>
                         <Avatar>
@@ -28,7 +31,7 @@ const OrderList = ( { orderList } ) => {
                       </ListItemAvatar>
 
                       <ListItemText
-                        primary = { item.name }
+                        primary = { <Typography noWrap> {item.name} </Typography> }
                         secondary = { <ul>
                           { item.ingredients && item.ingredients.map(ingredient => {
                               return ingredient.quantity > 0 
