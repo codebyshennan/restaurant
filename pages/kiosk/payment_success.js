@@ -100,11 +100,11 @@ const PaymentSuccess = () => {
           <Receipt cartItems={cartItems} cartPrice={cartPrice} queue={queue}/>
         </div>
 
-    
-        <Button variant="outlined" className="p-16">
-          Ok!
-        </Button>
-      
+        <a href='/kiosk'>
+          <Button variant="outlined" className="p-16">
+            Ok!
+          </Button>
+        </a>
     </div>
   )
 }
