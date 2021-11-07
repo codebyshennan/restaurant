@@ -24,7 +24,7 @@ import SideSelection from '../../components/kiosk/menu/SideSelection.jsx';
 import {createMemoryHistory} from 'history'
 import Head from 'next/head'
 import dbConnection from '../../lib/mongodb';
-import PaymentSuccess from '../../components/kiosk/PaymentSuccess.jsx';
+import PaymentSuccess from './PaymentSuccess.js';
 import SideRequest from '../../components/kiosk/menu/SideRequest';
 import CartPopUp from '../../components/kiosk/menu/CartPopUp';
 
@@ -128,7 +128,7 @@ const App = ({isConnected, menuItems, mealItems, compatibleMealItems}) => {
 export const getServerSideProps = async(context) => {
 
   const client = await dbConnection()
-
+  
   const db = client.db('fastfood')
   const data =  await db.collection('items').find({}).toArray() 
   const mealData = await db.collection('meals').find({}).toArray()
