@@ -38,7 +38,7 @@ const NewCard = ( { order } ) => {
   const handleOrderCompletion = () => {
     setCompleteOrder(true)
     setTimeout(async()=> {
-      await fetch('/api/kitchen/orders', {method: 'DELETE', body: order._id})
+      await fetch('/api/kitchen/orders', {method: 'PUT', body: order._id})
     }, 1000)
   }
 

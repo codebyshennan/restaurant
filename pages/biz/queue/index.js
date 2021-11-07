@@ -7,6 +7,10 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -50,11 +54,25 @@ const ShowQueue = () => {
   const stillProcessing = data && 
                             data
                             .filter(order => order.status == "processing")
-                            .map(order=> {return order.queue})
+                            .map(order=> {
+                                return (
+                                  <ListItemButton sx={{fontSize: 50, textAlign: "center", paddingLeft: 50}} key={order._id}> 
+                                    <ListItemIcon> </ListItemIcon>
+                                    {order.queue}
+                                   </ListItemButton>
+                                  )
+                                })
   const readyForCollection = data && 
                               data
                               .filter(order => order.status == "ready")
-                              .map(order=> {return order.queue})
+                              .map(order => {
+                                return (
+                                  <ListItemButton sx={{fontSize: 50, textAlign: "center", paddingLeft: 50}} key={order._id}> 
+                                  <ListItemIcon> </ListItemIcon>
+                                    {order.queue}
+                                   </ListItemButton>
+                                  )
+                                })
 
 
   return (
@@ -67,7 +85,9 @@ const ShowQueue = () => {
             </Typography>
 
             <Divider />
-              {JSON.stringify(readyForCollection)}
+              <List component="div">
+                {readyForCollection}
+              </List>
           </Item>
         </Grid>
         <Grid item xs={6}>
@@ -76,7 +96,9 @@ const ShowQueue = () => {
         Preparing
       </Typography>
       <Divider />
-      {JSON.stringify(stillProcessing)}
+        <List component="div">
+                {stillProcessing}
+              </List>
       </Item>
         </Grid>
       </Grid>

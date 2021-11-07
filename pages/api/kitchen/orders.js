@@ -14,12 +14,12 @@ const ordersHandler = async (req, res) => {
     res.status(200).send(ordersData)
   }
 
-  if(method == "DELETE") {
+  if(method == "PUT") {
     
     // delete
     const id = req.body
     console.log(id)
-    const updateOrder = await db.collection('orders').updateOne({"_id": ObjectID(id)}, {$set: {"status": "completed", "completed_at": new Date()}}, {upsert: true})
+    const updateOrder = await db.collection('orders').updateOne({"_id": ObjectID(id)}, {$set: {"status": "ready", "completed_at": new Date()}}, {upsert: true})
     console.log(updateOrder)
     res.send(updateOrder)
   }
