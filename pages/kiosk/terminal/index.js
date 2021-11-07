@@ -5,44 +5,52 @@ import { loadStripeTerminal } from '@stripe/terminal-js/pure';
 import 'tailwindcss/tailwind.css'
 
 
+/**
+ *
+ * Initiates a Stripe Terminal flow
+ * Directed from user selecting credit card as a payment method
+ * @return {*} 
+ */
 const Terminal = () => {
-
+  const [ amount, setAmount ] = useState(0)
   const [ terminal, setTerminal ] = useState('')
-  const [ creditCard, setCreditCard ] = useState('')
   const creditCardRef = useRef('')
 
   let discoveredReaders
 
   const discoverAndConnectReader = (terminal) => {
     let config = { simulated : true }
-    terminal.discoverReaders(config).then(discoverResult => {
-      if(discoverResult.error) {
-        log(`Failed to discover: ${discoverResult.error}`)
-      } else if (discoverResult.discoveredReaders.length === 0 ) {
-        log('No available readers')
-      } else {
-        discoveredReaders = discoverResult.discoveredReaders
-        log('Starting Terminal...')
-        const selectedReader = discoveredReaders[0] // simulated
-        terminal.connectReader(selectedReader)
-          .then(connectResult => {
-            if(connectResult.error) {
-              log(`Failed to connect: ${connectResult.error}`)
-              return
-            } else {
-              log(`Connected to reader: ${connectResult.reader.label}`)
-              return 
-            }
-          })
-      }
-    })
-  }
 
+    terminal
+      .discoverReaders(config)
+      .then(discoverResult => {
+        if(discoverResult.error) {
+          log(`Failed to discover: ${discoverResult.error}`)
+        } else if (discoverResult.discoveredReaders.length === 0 ) {
+          log('No available readers')
+        } else {
+          discoveredReaders = discoverResult.discoveredReaders
+          log('Starting Terminal...')
+          const selectedReader = discoveredReaders[0] // simulated
+          terminal
+            .connectReader(selectedReader)
+            .then(connectResult => {
+              if(connectResult.error) {
+                log(`Failed to connect: ${connectResult.error}`)
+                return
+              } else {
+                log(`Connected to reader: ${connectResult.reader.label}`)
+                return 
+              }
+            })
+        }
+      })
+  }
 
   // init function when order is at checkout page
   // send body message as a JSON string
   const fetchPaymentIntentClientSecret = (amount)=> {
-    const bodyContent = JSON.stringify({amount: 100})
+    const bodyContent = JSON.stringify({amount: amount})
 
     return fetch('/api/terminal/create_payment_intent', {
       method: 'POST',
@@ -51,10 +59,9 @@ const Terminal = () => {
       },
       body: bodyContent
     })
-    .then( res => res.json())
-    .then(data => data.client_secret)
+    .then( res => res.json() )
+    .then( data => data.client_secret )
   }
-
 
   const capture = (paymentIntentId) => {
     return fetch('/api/terminal/capture_payment_intent', {
@@ -68,16 +75,15 @@ const Terminal = () => {
     .then(data => {
       log(JSON.stringify(data.status))
       return JSON.stringify(data)
-    }
-      )
+    })
   }
 
   const collectPayment = async( creditCard )=> {
 
     // get the client intent secret for further payment
-    const clientSecret = await fetchPaymentIntentClientSecret()
+    const clientSecret = await fetchPaymentIntentClientSecret(amount)
 
-    terminal.setSimulatorConfiguration({testCardNumber: creditCard.toString() });
+    terminal.setSimulatorConfiguration( {testCardNumber: creditCard.toString() });
     const result = await terminal.collectPaymentMethod(clientSecret)
     if (result.error) {
       // Placeholder for handling result.error
@@ -97,6 +103,8 @@ const Terminal = () => {
 
 
   useEffect(() => {
+    const amount = Number(new URLSearchParams(window.location.search).get("amount"))
+    setAmount(amount)
     
     const getData = async()=> {
     
@@ -105,8 +113,8 @@ const Terminal = () => {
         const terminal = StripeTerminal.create({
           onFetchConnectionToken: async () => {
             return fetch('/api/terminal/connection_token', { method : 'POST'})
-              .then(res => res.json())
-              .then(data => data.secret)
+              .then( res => res.json() )
+              .then( data => data.secret )
           },
           onUnexpectedReaderDisconnect: ()=> {
             // In this function, your app should notify the user that the reader disconnected.
@@ -130,8 +138,8 @@ const Terminal = () => {
   const inputCreditCard = async (event) => {
     if(event.target.value.length == 16) {
       log("Authorizing payment...")
-      const paymentIntent = await collectPayment(creditCardRef.current.value)
-      const redirectURL = `http://localhost:3000/kiosk/payment_success?paymentIntent=${paymentIntent}`
+      const paymentIntent = (await collectPayment(creditCardRef.current.value)).id
+      const redirectURL = `http://localhost:3000/kiosk/payment_success?paymentIntent=${paymentIntent}&paymentMethod=creditCard`
       window.opener.location.replace(redirectURL)
       window.close()
     }

@@ -12,13 +12,18 @@ const appDomain = process.env.APP_DOMAIN
 const PaymentElement = () => {
 
   const [clientSecret, setClientSecret] = useState("")
+  const [ amount, setAmount ] = useState(0)
   
   useEffect(()=> {
+
+    const amount = new URLSearchParams(window.location.search).get("amount");
+    setAmount(amount)
+
     // create paymentIntent as soon as page loads
     fetch(`/api/stripe/checkout`, {
       method: "POST",
       headers: { "Content-Type": "application/json"},
-      body: JSON.stringify({items: "items"})
+      body: JSON.stringify({amount: amount})
     })
     .then(res => res.json())
     .then(data=> {

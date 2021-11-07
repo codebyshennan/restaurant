@@ -24,7 +24,6 @@ import SideSelection from '../../components/kiosk/menu/SideSelection.jsx';
 import {createMemoryHistory} from 'history'
 import Head from 'next/head'
 import dbConnection from '../../lib/mongodb';
-import PaymentSuccess from '../../components/kiosk/PaymentSuccess.jsx';
 import SideRequest from '../../components/kiosk/menu/SideRequest';
 import CartPopUp from '../../components/kiosk/menu/CartPopUp';
 
@@ -84,6 +83,10 @@ const App = ({isConnected, menuItems, mealItems, compatibleMealItems}) => {
                       </Route>
 
                     <DineInContext.Provider value ={{dineIn, setDineIn}}>
+                      <Route path="/cart">
+                        <Cart />
+                      </Route>
+
                       <Route path="/paymentmode">
                         <PaymentMode />
                       </Route>
@@ -92,9 +95,6 @@ const App = ({isConnected, menuItems, mealItems, compatibleMealItems}) => {
                         <CreditCardPayment />
                       </Route>
 
-                      <Route path="/paysuccess">
-                        <PaymentSuccess />
-                      </Route>
                     </DineInContext.Provider>
 
                       <Route path="/specialrequest">
@@ -109,9 +109,6 @@ const App = ({isConnected, menuItems, mealItems, compatibleMealItems}) => {
                         <ReviewScreen />
                       </Route>
 
-                      <Route path="/cart">
-                        <Cart />
-                      </Route>
                     </SubtotalContext.Provider>
                   </CompatibleMealContext.Provider>
                 </MealContext.Provider>
@@ -155,7 +152,6 @@ export const getServerSideProps = async(context) => {
 	},
 ]).toArray()
   const compatibleMealItems = JSON.parse(JSON.stringify(compatibleMealData))
-  console.log(compatibleMealData)
   const menuItems = JSON.parse(JSON.stringify(data))
   const mealItems = JSON.parse(JSON.stringify(mealData))
   // client.db() will be the default database passed in the MONGODB_URI

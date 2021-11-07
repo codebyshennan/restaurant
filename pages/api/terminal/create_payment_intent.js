@@ -2,7 +2,8 @@ import React from 'react'
 const stripe = require('stripe')(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY)
 
 const createPaymentIntent = async (req, res) => {
-  const {method} = req
+  const { method } = req
+  const { amount } = req.body
   res.setHeader('Access-Control-Allow-Credentials', true)
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST')
@@ -16,7 +17,7 @@ const createPaymentIntent = async (req, res) => {
   if(method == "POST") {
 
     const intent = await stripe.paymentIntents.create({
-      amount: req.body.amount,
+      amount: parseInt(Number(amount) * 100),
       currency: 'sgd',
       payment_method_types: ['card_present'],
       capture_method: 'manual',

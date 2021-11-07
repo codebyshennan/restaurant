@@ -9,14 +9,15 @@ import {
   NavLink,
   useLocation
 } from "react-router-dom";
-import {CartContext, SubtotalContext} from '../../pages/kiosk/index.js'
+import {CartContext, SubtotalContext, DineInContext} from '../../pages/kiosk/index.js'
 import Image from 'next/image'
 
 function Cart() {
   let location = useLocation()
-  const {cartItems, setCartItems} = useContext(CartContext)
-  const [newCart, setNewCart] = useState(location.cartProp)
-  const {subtotal, setSubtotal} = useContext(SubtotalContext)
+  const { cartItems, setCartItems } = useContext(CartContext)
+  const [ newCart, setNewCart ] = useState(location.cartProp)
+  const { subtotal, setSubtotal } = useContext(SubtotalContext)
+  const { dineIn } = useContext( DineInContext )
   
   const handleItemNumEdit = (didIncrease, index) => {
     const duplicatedItem = newCart[index]
@@ -35,10 +36,12 @@ function Cart() {
     setSubtotal(subtotal)
   }
 
-  const handleCartEdit = () => {
+  // pass the confirmed orders upon checking out
+  const handleCheckout = () => {
     setCartItems(newCart)
     localStorage.setItem("cart", JSON.stringify(newCart)) 
-    localStorage.setItem("subtotal", JSON.stringify(subtotal))    
+    localStorage.setItem("subtotal", JSON.stringify(subtotal))
+    localStorage.setItem("dineIn", JSON.stringify(dineIn))
   }
 
   const itemData = newCart.map((item, idx) => {
@@ -118,8 +121,8 @@ function Cart() {
           initial={{y: -50, opacity: 0}}
           animate={{y: 0, opacity: 1 }} 
           transition={{ duration: 0.5 }}>
-          <p>Item Total:</p>
-          <p>${subtotal.toFixed(2)}</p>
+            <p>Item Total:</p>
+            <p>${subtotal.toFixed(2)}</p>
           </motion.div>
 
           <motion.div className="flex justify-between mx-64 my-16 font-semibold" 
@@ -149,7 +152,7 @@ function Cart() {
                 total:subtotal * 1.17
               }
             }>
-              <Button variant="text" style={ { backgroundColor: '#ffae42', color: '#000000' } } className="shadow-md" onClick={ handleCartEdit }>
+              <Button variant="text" style={ { backgroundColor: '#ffae42', color: '#000000' } } className="shadow-md" onClick={ handleCheckout }>
                 <div className="p-6">
                     Proceed to Payment
                 </div>
@@ -162,7 +165,7 @@ function Cart() {
           animate={{y: 0, opacity: 1 }} 
           transition={{ duration: 2.5 }}>
             <NavLink to="/menu">
-              <Button variant="error" style={{backgroundColor: '#ff0000', color: '#FFFFFF'}} className=" shadow-md" onClick={() => {handleCartEdit()}}>
+              <Button variant="error" style={{backgroundColor: '#ff0000', color: '#FFFFFF'}} className=" shadow-md">
                 <div className="p-6">
                   Back to Menu
                 </div>

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { motion } from 'framer-motion'
@@ -7,11 +7,19 @@ import {
   useLocation
 } from "react-router-dom";
 import { DineInContext } from '../../pages/kiosk';
+import { useRouter } from 'next/router'
 
 export const PaymentMode = (props) => {
+  const router = useRouter()
+  
   let location = useLocation()
-  const {dineIn, setDineIn} = useContext(DineInContext)
   const subtotal = location.total
+
+  const handleCashPayment = (ev) => {
+    ev.preventDefault()
+    const redirectURL = `http://localhost:3000/kiosk/payment_success?paymentIntent=null&paymentMethod=cash`
+    router.push(redirectURL)
+  }
 
   return (
     <div className="pt-8 mt-11">
@@ -27,7 +35,7 @@ export const PaymentMode = (props) => {
           <NavLink to={
             {
               pathname:'/creditcardpayment',
-              cart:location.cart,
+              cart: location.cart,
               total: location.total
             }
           }>
@@ -42,14 +50,12 @@ export const PaymentMode = (props) => {
       initial={{y: -50, opacity: 0}}
       animate={{y: 0, opacity: 1 }} 
       transition={{ duration: 1 }}>
-        <NavLink to="/paysuccess">
-          <Button variant="error" style={{backgroundColor: '#FFFFFF', color: '#000000'}}className="pt-8 shadow-md">
+          <Button variant="error" style={{backgroundColor: '#FFFFFF', color: '#000000'}}className="pt-8 shadow-md" onClick={ handleCashPayment }>
             <div className="p-11">
               <p> Cash Payment <br />
               </p>
             </div>
           </Button>
-        </NavLink>
       </motion.div>
 
       <motion.div className="mt-11 flex justify-center" 

@@ -13,7 +13,7 @@ const queueHandler = async (req,res) => {
         const result = await db.collection('queue').find({}).toArray()
         console.log(JSON.stringify(result[0].seq_value))
         // return a message
-        return res.json(result);
+        return res.json(result[0].seq_value);
     } catch (error) {
         // return an error
         return res.send({

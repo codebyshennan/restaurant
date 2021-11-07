@@ -5,6 +5,8 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 import CircularProgress from '@mui/material/CircularProgress';
+import 'tailwindcss/tailwind.css'
+import Button from '@mui/material/Button';
  
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -60,7 +62,7 @@ export default function CheckoutForm() {
       confirmParams: {
         // Make sure to change this to your payment completion page
         // paymentIntent result will be appended to the end of the url
-        return_url: "http://localhost:3000/kiosk/payment_success",
+        return_url: "http://localhost:3000/kiosk/grabpay/hook",
       },
     });
 
@@ -79,13 +81,13 @@ export default function CheckoutForm() {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
+    <form id="payment-form">
       <PaymentElement id="payment-element" />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
+      <Button disabled={isLoading || !stripe || !elements} id="submit" onClick={handleSubmit} className="w-screen" color="success" variant="contained">
         <span id="button-text">
           {isLoading ? <CircularProgress /> : "Pay Now"}
         </span>
-      </button>
+      </Button>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>
