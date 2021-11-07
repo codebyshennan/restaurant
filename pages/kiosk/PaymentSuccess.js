@@ -41,7 +41,6 @@ const PaymentSuccess = () => {
             </Typography>
           )
         }
-
       <Typography variant="h5" color="initial">
         Your queue number is:
         <br />
