@@ -4,10 +4,10 @@ import Button from '@mui/material/Button'
 import {
   NavLink
 } from "react-router-dom";
-import {DineInContext} from '../../pages/kiosk/index.js'
+// import {DineInContext} from '../../pages/kiosk/index.js'
 
 function PaymentSuccess() {
-  const {dineIn, setDineIn} = useContext(DineInContext)
+  // const {dineIn, setDineIn} = useContext(DineInContext)
   const [data, setData] = useState()
   useEffect(() => {
     const getResult = async() => {
@@ -22,7 +22,7 @@ function PaymentSuccess() {
     <div>
             <Typography variant="h3" color="initial">Payment succeeded! <br />
       </Typography>
-        {dineIn && (
+        {/* {dineIn && (
           <Typography variant="h5" color="initial">
           You have selected to Dine in.
           </Typography>
@@ -31,7 +31,7 @@ function PaymentSuccess() {
             <Typography variant="h5" color="initial">
           You have selected to takeout your food.
           </Typography>
-          )}
+          )} */}
       <Typography variant="h5" color="initial">
         Your queue number is:
         <br />
