@@ -91,6 +91,10 @@ const App = ({isConnected, menuItems, mealItems, compatibleMealItems}) => {
                       <Route path="/creditcardpayment">
                         <CreditCardPayment />
                       </Route>
+
+                      <Route path="/paysuccess">
+                        <PaymentSuccess />
+                      </Route>
                     </DineInContext.Provider>
 
                       <Route path="/specialrequest">
@@ -108,11 +112,6 @@ const App = ({isConnected, menuItems, mealItems, compatibleMealItems}) => {
                       <Route path="/cart">
                         <Cart />
                       </Route>
-
-                      <Route path="/paysuccess">
-                        <PaymentSuccess />
-                      </Route>
-
                     </SubtotalContext.Provider>
                   </CompatibleMealContext.Provider>
                 </MealContext.Provider>

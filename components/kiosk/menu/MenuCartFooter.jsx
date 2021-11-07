@@ -12,7 +12,7 @@ import {CartContext, SubtotalContext} from '../../../pages/kiosk/index.js'
 
 function MenuCartFooter({currentPrice, setCurrentItems, currentItems, setGoToReview, setCategory, setCurrentPrice, mealSize, meal}) {
   const {cartItems, setCartItems} = useContext(CartContext)
-  const {subtotal, setSubtotal} = useContext(SubtotalContext)
+  const {subtotal, setSubtotal} = useContext(SubtotalContext) 
   console.log(currentItems)
     const addToCart = () => {
     meal.main[0] = currentItems[0]
