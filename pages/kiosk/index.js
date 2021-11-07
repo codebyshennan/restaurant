@@ -125,7 +125,7 @@ const App = ({isConnected, menuItems, mealItems, compatibleMealItems}) => {
 export const getServerSideProps = async(context) => {
 
   const client = await dbConnection()
-
+  
   const db = client.db('fastfood')
   const data =  await db.collection('items').find({}).toArray() 
   const mealData = await db.collection('meals').find({}).toArray()
