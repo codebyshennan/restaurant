@@ -1,6 +1,10 @@
 import React, {useEffect, useState, useContext} from 'react'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
+import {
+  Link
+} from "react-router-dom";
+import Receipt from '../../components/kiosk/Receipt.jsx';
 
 const PaymentSuccess = () => {
 
@@ -26,6 +30,7 @@ const PaymentSuccess = () => {
     setDineIn(dineIn)
     setCartPrice(cartPrice)
     setCartItems(cartItems)
+    console.log(cartItems)
 
     const sendOrder = async() => {
       const order = { 
@@ -63,7 +68,7 @@ const PaymentSuccess = () => {
   
 
   return (
-    <div>
+    <div className="ml-20">
       <Typography variant="h3" color="initial">
         Payment succeeded!<br />
       </Typography>
@@ -87,15 +92,18 @@ const PaymentSuccess = () => {
         <br />
       </Typography>
 
-      <Typography variant="h1" color="initial">
-        {/* {data} */}
+      <Typography variant="h5" color="initial">
+        Here is your Receipt:
+        <br />
       </Typography>
+        <div className='ml-20'>
+          <Receipt cartItems={cartItems} cartPrice={cartPrice} queue={queue}/>
+        </div>
+
     
-      {/* <Link href="/kiosk"> */}
         <Button variant="outlined" className="p-16">
           Ok!
         </Button>
-      {/* </Link> */}
       
     </div>
   )
