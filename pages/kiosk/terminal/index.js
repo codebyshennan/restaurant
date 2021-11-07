@@ -65,7 +65,11 @@ const Terminal = () => {
         body: JSON.stringify({'id': paymentIntentId})
     })
     .then(res => res.json())
-    .then(data => log(JSON.stringify(data.status)))
+    .then(data => {
+      log(JSON.stringify(data.status))
+      return JSON.stringify(data)
+    }
+      )
   }
 
   const collectPayment = async( creditCard )=> {
@@ -85,7 +89,8 @@ const Terminal = () => {
         } else if (processingPayment.paymentIntent) {
             const paymentIntentId = processingPayment.paymentIntent.id;
             log("Parsing payment intent...");
-            capture(paymentIntentId)
+            const status = capture(paymentIntentId)
+            return status
         }
       };
     }
@@ -122,10 +127,13 @@ const Terminal = () => {
     creditCardRef.current.focus()
   }, [])
 
-  const inputCreditCard = (event) => {
+  const inputCreditCard = async (event) => {
     if(event.target.value.length == 16) {
       log("Authorizing payment...")
-      collectPayment(creditCardRef.current.value)
+      const paymentIntent = await collectPayment(creditCardRef.current.value)
+      const redirectURL = `http://localhost:3000/kiosk/payment_success?paymentIntent=${paymentIntent}`
+      window.opener.location.replace(redirectURL)
+      window.close()
     }
   } 
 
