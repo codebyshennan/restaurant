@@ -4,7 +4,8 @@ import {
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
-
+import CircularProgress from '@mui/material/CircularProgress';
+ 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
@@ -58,6 +59,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
+        // paymentIntent result will be appended to the end of the url
         return_url: "http://localhost:3000/kiosk/payment_success",
       },
     });
@@ -81,7 +83,7 @@ export default function CheckoutForm() {
       <PaymentElement id="payment-element" />
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+          {isLoading ? <CircularProgress /> : "Pay Now"}
         </span>
       </button>
       {/* Show any error or success messages */}

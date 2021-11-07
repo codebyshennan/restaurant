@@ -1,24 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import { loadStripe } from '@stripe/stripe-js/pure';
-// import Cart from '../../../components/web/payments/cart'
-// import CustomerDetails from '../../../components/web/payments/customerDetails'
 import CheckoutForm from '../../../components/payments/stripe/CheckoutForm'
-
 import { Elements } from '@stripe/react-stripe-js'
-// import '../../../components/payments/stripe/checkout.module.css'
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // // recreating the `Stripe` object on every render.
+// TAKE NOTE: LIVE KEY
 const stripePromise = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_LIVE_PUBLISH);
-
-// process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-
-console.log(stripePromise)
-
 const appDomain = process.env.APP_DOMAIN
 
 const PaymentElement = () => {
+
   const [clientSecret, setClientSecret] = useState("")
+  
   useEffect(()=> {
     // create paymentIntent as soon as page loads
     fetch(`/api/stripe/checkout`, {
@@ -48,7 +42,6 @@ const PaymentElement = () => {
       )}
     </div>
   )
-
 }
 
 export default PaymentElement

@@ -3,7 +3,6 @@ import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import RemoveIcon from '@mui/icons-material/Remove';
 import CloseIcon from '@mui/icons-material/Close';
 import { motion } from 'framer-motion'
 import {
@@ -38,38 +37,49 @@ function Cart() {
 
   const handleCartEdit = () => {
     setCartItems(newCart)
+    localStorage.setItem("cart", JSON.stringify(newCart)) 
+    localStorage.setItem("subtotal", JSON.stringify(subtotal))    
   }
 
   const itemData = newCart.map((item, idx) => {
     return (
       <div className="mt-4 border-2 p-4 border-opacity-100 font-bold rounded-2xl" key={idx} >
-        {item.beverage === undefined && (
+        {
+          item.beverage === undefined && (
            <Grid container spacing={2}>
+
             <Grid item xs={4}>
               <Image src={item.image_url} height='200' width='200' alt={item.name}/>
             </Grid>
+
             <Grid item xs={4}>
               {item.name} <br />
               <a onClick={() => {handleItemNumEdit(true,idx)}}>
                 <ControlPointIcon color="success"/>
               </a>
             </Grid>
+
             <Grid item xs={4}>
-            <a onClick={() => {handleItemNumEdit(false,idx)}}>
-              <CloseIcon color="error"/>
-            </a>
-            <br />
-            {/* allow them to update number of items */}
-            {item.price}
+              <a onClick={() => {handleItemNumEdit(false,idx)}}>
+                <CloseIcon color="error"/>
+              </a>
+              <br />
+              {/* allow them to update number of items */}
+              {item.price}
             </Grid>
+
           </Grid>
         )}
 
-        {item.beverage && (
+        {
+          item.beverage && (
+
           <Grid container spacing={2}>
+
           <Grid item xs={4}>
             <Image src={item.image_url} height='200' width='200' alt={item.name}/>
           </Grid>
+
           <Grid item xs={4}>
             {item.name} <br />
             {item.side[0].name} <br />
@@ -78,14 +88,16 @@ function Cart() {
               <ControlPointIcon color="success"/>
             </a>
           </Grid>
+
           <Grid item xs={4}>
-          <a onClick={() => {handleItemNumEdit(false,idx)}}>
-            <CloseIcon color="error"/>
-          </a>
-          <br />
-          {/* allow them to update number of items */}
-          {item.price}
+            <a onClick={() => {handleItemNumEdit(false,idx)}}>
+              <CloseIcon color="error"/>
+            </a>
+            <br />
+            {/* allow them to update number of items */}
+            {item.price}
           </Grid>
+
         </Grid>
         )}
       </div>
@@ -122,28 +134,29 @@ function Cart() {
           initial={{y: -50, opacity: 0}}
           animate={{y: 0, opacity: 1 }} 
           transition={{ duration: 1.5 }}>
-            <p>Total:</p>
-            <p>${(subtotal * 1.17).toFixed(2)}</p>
+            <p> Total: </p>
+            <p> ${(subtotal * 1.17).toFixed(2)} </p>
           </motion.div>
 
           <motion.div className="mt-11" 
           initial={{y: -50, opacity: 0}}
           animate={{y: 0, opacity: 1 }} 
           transition={{ duration: 2 }}>
-
             <NavLink to={
-              {pathname:"/paymentmode",
-              cart:newCart,
-              total:subtotal * 1.17
-            }
+              {
+                pathname:"/paymentmode",
+                cart:newCart,
+                total:subtotal * 1.17
+              }
             }>
-              <Button variant="text" style={{backgroundColor: '#ffae42', color: '#000000'}} className="shadow-md" onClick={handleCartEdit}>
+              <Button variant="text" style={ { backgroundColor: '#ffae42', color: '#000000' } } className="shadow-md" onClick={ handleCartEdit }>
                 <div className="p-6">
                     Proceed to Payment
                 </div>
               </Button>
             </NavLink>
           </motion.div>
+
           <motion.div className="mt-11" 
           initial={{y: -50, opacity: 0}}
           animate={{y: 0, opacity: 1 }} 
