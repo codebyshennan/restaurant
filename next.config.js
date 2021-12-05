@@ -1,4 +1,5 @@
 module.exports = {
+  target: "serverless",
   future: {
     webpack5: true
   },
@@ -9,5 +10,4 @@ module.exports = {
     }
     return config;
   },
-  target: "serverless"
 };
