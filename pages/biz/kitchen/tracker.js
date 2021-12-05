@@ -18,6 +18,7 @@ const Tracker = ({ordersData}) => {
 
   // continuously fetch data from server
   const { data, error } = useSWR('/api/kitchen/orders', fetcher, { refreshInterval: 1000 })
+  
   const Loader = ({message}) => {
       return (
       <Grid

@@ -19,10 +19,21 @@ const ordersHandler = async (req, res) => {
     // delete
     const id = req.body
     console.log(id)
-    const updateOrder = await db.collection('orders').updateOne({"_id": ObjectID(id)}, {$set: {"status": "ready", "completed_at": new Date()}}, {upsert: true})
+    const updateOrder = await db.collection('orders').updateOne({"_id": ObjectID(id)}, {$set: {"status": "ready"}}, {upsert: true})
     console.log(updateOrder)
     res.send(updateOrder)
   }
+
+  if(method == "DELETE") {
+    
+    // delete
+    const id = req.body
+    console.log(id)
+    const updateOrder = await db.collection('orders').updateOne({"_id": ObjectID(id)}, {$set: {"status": "completed", "completed_at": new Date()}}, {upsert: true})
+    console.log(updateOrder)
+    res.send(updateOrder)
+  }
+
 
 }
 

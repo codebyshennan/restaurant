@@ -1,9 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import {
-  Link
-} from "react-router-dom";
+import Link from "next/link";
 import Receipt from '../../components/kiosk/Receipt.jsx';
 
 const PaymentSuccess = () => {
@@ -100,11 +98,13 @@ const PaymentSuccess = () => {
           <Receipt cartItems={cartItems} cartPrice={cartPrice} queue={queue}/>
         </div>
 
-        <a href='/kiosk'>
+        <Link href='/kiosk'>
+          <a>
           <Button variant="outlined" className="p-16">
             Ok!
           </Button>
-        </a>
+          </a>
+        </Link>
     </div>
   )
 }

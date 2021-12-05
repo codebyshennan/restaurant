@@ -180,7 +180,7 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
             transition={{ duration: 1.5 }}>
             <Button variant="success" style={{backgroundColor: '#009900', color: '#FFFFFF'}} className="pt-8 shadow-md" onClick={() => {handleFinishEdit()}}>
             <div className="p-11">
-                  I'm done customising
+                  Im done customising
             </div>
             </Button>
 

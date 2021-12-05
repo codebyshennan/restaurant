@@ -51,12 +51,16 @@ const ShowQueue = () => {
   if (error) return (<Loader message={"failed"} />)
   if (!data) return (<Loader message={"loading"} />)
 
+  const markAsComplete = async (id) => {
+    await fetch('/api/kitchen/orders', {method: 'DELETE', body: id})
+  }
+
   const stillProcessing = data && 
                             data
                             .filter(order => order.status == "processing")
                             .map(order=> {
                                 return (
-                                  <ListItemButton sx={{fontSize: 50, textAlign: "center", paddingLeft: 50}} key={order._id}> 
+                                  <ListItemButton sx={{fontSize: 50, textAlign: "center", paddingLeft: "40%"}} key={order._id} > 
                                     <ListItemIcon> </ListItemIcon>
                                     {order.queue}
                                    </ListItemButton>
@@ -67,7 +71,7 @@ const ShowQueue = () => {
                               .filter(order => order.status == "ready")
                               .map(order => {
                                 return (
-                                  <ListItemButton sx={{fontSize: 50, textAlign: "center", paddingLeft: 50}} key={order._id}> 
+                                  <ListItemButton sx={{fontSize: 50, textAlign: "center", paddingLeft: "40%"}} key={order._id} onClick={()=> {markAsComplete(order._id)}}> 
                                   <ListItemIcon> </ListItemIcon>
                                     {order.queue}
                                    </ListItemButton>
