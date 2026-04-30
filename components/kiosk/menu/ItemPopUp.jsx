@@ -33,9 +33,11 @@ function ItemPopUp({ item, currentCost, handleOpen }) {
                     </Typography>
                     {sideItem.name}
                     {sideItem.price.map((size, i) => {
-                          <a>
-                            {sideItem.name}, {size.size}, ${size.price - item.currentCost}
-                          </a>
+                          return (
+                            <a>
+                              {sideItem.name}, {size.size}, ${size.price - currentCost}
+                            </a>
+                          )
                     })}
                   </div>
                 </Box>
