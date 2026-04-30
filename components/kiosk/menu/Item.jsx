@@ -25,14 +25,12 @@ const style = {
 function Item({item, isMain, id,}) {
    const [open, setOpen] = useState(false);
 
-  console.log(item)
   const price =  item.price[0].price || item.price
   const classes = useStyles()
   const {cartItems, setCartItems} = useContext(CartContext)
   const {subtotal, setSubtotal} = useContext(SubtotalContext)
   const path = () => {
     if (!isMain) {
-      console.log('returned menu')
       return '/menu'
     }
     else if (isMain || !item.ingredients) {
@@ -48,8 +46,7 @@ function Item({item, isMain, id,}) {
       const addedItem = JSON.parse(JSON.stringify(item))
       addedItem.price = addedItem.price[indexOfPrice].price
       setCartItems([...cartItems, addedItem])
-      subtotal += addedItem.price
-      setSubtotal(subtotal)
+      setSubtotal(prev => prev + addedItem.price)
       setOpen(false)
   }
   return (

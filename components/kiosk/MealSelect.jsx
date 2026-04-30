@@ -26,8 +26,7 @@ export const MealSelect = (props) => {
       const addedItem = JSON.parse(JSON.stringify(item[0]))
       addedItem.price = addedItem.price[0].price
       setCartItems([...cartItems, addedItem])
-      subtotal += addedItem.price
-      setSubtotal(subtotal)
+      setSubtotal(prev => prev + addedItem.price)
   }
   const path = () => {
     if (item.ingredients === undefined){

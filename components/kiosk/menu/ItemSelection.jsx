@@ -53,20 +53,15 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
         if (category === 'sides') {
           currentItems[1] = item
           priceIncrease = itemPrice - sidePrice
-          console.log(priceIncrease)
           setSidePrice(itemPrice)
         }
         else {
           currentItems[2] = item
           priceIncrease = itemPrice - drinkPrice
-          console.log(priceIncrease)
           setDrinkPrice(itemPrice)
         }
         setCurrentItems([...currentItems])
-        currentPrice += priceIncrease
-        console.log(currentPrice)
-        setCurrentPrice(currentPrice)
-        console.log(currentPrice)
+        setCurrentPrice(prev => prev + priceIncrease)
         changeCategory()
   }
   const changeCategory = () => {
@@ -90,7 +85,6 @@ function ItemSelection({category, currentItems, setCurrentItems, mainItem, curre
     }
     setOpen(!open)
   };
-      console.log(mainItem)
   return (
     <div className='mt-8'>
             {category !== 'meal' && (

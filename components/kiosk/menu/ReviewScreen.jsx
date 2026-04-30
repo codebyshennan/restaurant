@@ -30,8 +30,6 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
   const [initialState, setInitialState] = useState()
   const [currentItem, setCurrentItem] = useState(currentItems[0])
   const [prevItem, setPrevItem] = useState({})
-      console.log(prevItem)
-    console.log(currentItem)
   useEffect(() => {
     if (prevItem === currentItem && open || prevItem === {}){
     setOpen(false)
@@ -81,9 +79,6 @@ function ReviewScreen({currentPrice, currentItems, setCurrentItems, setGoToRevie
       setOpen(false)
     }
   }
-
-  console.log(open)
-  console.log(initialState)
 
   const data = currentItem.ingredients && currentItem.ingredients
                 .map((ingredient, idx)=>{

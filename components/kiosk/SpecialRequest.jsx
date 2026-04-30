@@ -15,9 +15,7 @@ import {CartContext, SubtotalContext} from '../../pages/kiosk/index.js'
 export const SpecialRequest = (props) => {
   let location = useLocation()
   const item = location.itemProp.item
-  console.log(item)
   const initialState = JSON.parse(JSON.stringify(item[0]))
-  console.log(initialState === item[0])
   const {cartItems, setCartItems} = useContext(CartContext)
   const {subtotal, setSubtotal} = useContext(SubtotalContext)
   const [currentItem, setCurrentItem] = useState(initialState)
@@ -35,7 +33,7 @@ export const SpecialRequest = (props) => {
 
   const handleAddToCart = () => {
     // need to change to allow sets
-    setSubtotal(subtotal += currentItem.price[0].price)
+    setSubtotal(prev => prev + currentItem.price[0].price)
     if (cartItems === []) {
       setCartItems(meal)
     }

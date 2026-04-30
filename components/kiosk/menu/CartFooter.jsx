@@ -10,7 +10,6 @@ import {CartContext, SubtotalContext} from '../../../pages/kiosk/index.js'
 function CartFooter() {
     const {cartItems, setCartItems} = useContext(CartContext)
     const {subtotal, setSubtotal} = useContext(SubtotalContext)
-    console.log(cartItems)
   return (
     <div className="flex justify-center">
           <div className="rounded-2xl mb-3">

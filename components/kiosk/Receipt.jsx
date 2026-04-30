@@ -24,7 +24,6 @@ import { minWidth } from '@mui/system';
 
 
 const Receipt = ( { cartItems, cartPrice, queue} ) => {
-  console.log(cartItems)
   const list = cartItems.map( (item, i) => {
                 return (
                   <div key = { item._id } className='flex justify-between ml-2'>

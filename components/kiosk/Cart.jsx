@@ -21,19 +21,14 @@ function Cart() {
   
   const handleItemNumEdit = (didIncrease, index) => {
     const duplicatedItem = newCart[index]
-    console.log(duplicatedItem)
     if(didIncrease) {
-      console.log(subtotal)
-      subtotal += Number(duplicatedItem.price)
-      console.log(subtotal)
+      setSubtotal(prev => prev + Number(duplicatedItem.price))
       setNewCart([...newCart, duplicatedItem])
-      console.log(newCart)
     }
     else {
-      subtotal -= Number(duplicatedItem.price)
+      setSubtotal(prev => prev - Number(duplicatedItem.price))
       setNewCart(newCart.filter((item, idx) => {if (idx !== index) return item}))
     }
-    setSubtotal(subtotal)
   }
 
   // pass the confirmed orders upon checking out

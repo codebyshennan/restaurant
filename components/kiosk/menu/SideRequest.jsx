@@ -27,7 +27,6 @@ function SideRequest() {
   const [goToReview, setGoToReview] = useState(false)
   const [currentPrice, setCurrentPrice] = useState(0.00)
   const [mealSize, setMealSize] = useState('')
-  console.log(category)
   return (
     <div>
       {goToReview && <ReviewScreen currentPrice={currentPrice} currentItems={currentItems} setCurrentItems={setCurrentItems} setGoToReview={setGoToReview} setCategory={setCategory} setCurrentPrice={setCurrentPrice} mealSize={mealSize} meal={orderedMeal}/>}

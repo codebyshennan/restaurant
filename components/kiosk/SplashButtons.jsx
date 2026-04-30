@@ -10,7 +10,6 @@ import { motion } from 'framer-motion'
 
 function SplashButtons({dineIn, setDineIn}) {
   const handleSetDineIn = (dineInInput) => {
-    console.log(dineIn)
     setDineIn(dineInInput)
   }
   return (
