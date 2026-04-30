@@ -15,7 +15,7 @@ import Image from 'next/image'
 function Cart() {
   let location = useLocation()
   const { cartItems, setCartItems } = useContext(CartContext)
-  const [ newCart, setNewCart ] = useState(location.cartProp)
+  const [ newCart, setNewCart ] = useState(location.state?.cartProp || [])
   const { subtotal, setSubtotal } = useContext(SubtotalContext)
   const { dineIn } = useContext( DineInContext )
   

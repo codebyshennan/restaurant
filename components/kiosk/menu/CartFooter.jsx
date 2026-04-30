@@ -17,7 +17,7 @@ function CartFooter() {
             <p className="border-2 p-6 border-opacity-100 font-bold mb-3">
             Subtotal: ${parseFloat(subtotal).toFixed(2)}
             </p>
-              <NavLink to={{pathname: '/cart', cartProp: cartItems, subtotal: parseFloat(subtotal).toFixed(2)}}>
+              <NavLink to={{pathname: '/cart', state: { cartProp: cartItems, subtotal: parseFloat(subtotal).toFixed(2) }}}>
                 <Button variant="text" className="shadow-lg"> 
                     <p className="p-7">Checkout</p>
                 </Button >
