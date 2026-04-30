@@ -138,8 +138,9 @@ const Terminal = () => {
   const inputCreditCard = async (event) => {
     if(event.target.value.length == 16) {
       log("Authorizing payment...")
+      const baseUrl = process.env.APP_DOMAIN || 'http://localhost:3000'
       const paymentIntent = (await collectPayment(creditCardRef.current.value)).id
-      const redirectURL = `http://localhost:3000/kiosk/payment_success?paymentIntent=${paymentIntent}&paymentMethod=creditCard`
+      const redirectURL = `${baseUrl}/kiosk/payment_success?paymentIntent=${paymentIntent}&paymentMethod=creditCard`
       window.opener.location.replace(redirectURL)
       window.close()
     }
