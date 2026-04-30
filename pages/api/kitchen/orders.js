@@ -1,4 +1,3 @@
-import react from 'react'
 import dbConnection from '../../../lib/mongodb'
 const ObjectID = require('mongodb').ObjectID
 
