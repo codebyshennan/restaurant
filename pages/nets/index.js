@@ -49,6 +49,8 @@ const addMilli = (date) => {
 }
 
 
+const baseUrl = process.env.APP_DOMAIN || 'http://localhost:3000'
+
 const sampleReq = {
   "ss":"1",
   "msg":{
@@ -62,9 +64,9 @@ const sampleReq = {
     "currencyCode":"SGD",
     "paymentMode":"",
     "merchantTimeZone":"+8:00",
-    "b2sTxnEndURL":"http://localhost:3000/api/nets/gateway",
+    "b2sTxnEndURL":`${baseUrl}/api/nets/gateway`,
     "b2sTxnEndURLParam":"",
-    "s2sTxnEndURL":"http://localhost:3000/api/nets/gateway", //for server to server call
+    "s2sTxnEndURL":`${baseUrl}/api/nets/gateway`, //for server to server call
     "s2sTxnEndURLParam":"",
     "clientType":"W",
     "supMsg":"",
