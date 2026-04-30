@@ -21,9 +21,20 @@ const PaymentSuccess = () => {
     setPaymentIntent(new URLSearchParams(window.location.search).get("paymentIntent"))
     setPaymentMethod(paymentMethod)
 
-    const cartItems = JSON.parse(localStorage.getItem("cart"))
-    const cartPrice = JSON.parse(localStorage.getItem("subtotal"))
-    const dineIn = JSON.parse(localStorage.getItem("dineIn"))
+    let cartItems, cartPrice, dineIn
+    try {
+      cartItems = JSON.parse(localStorage.getItem("cart"))
+      cartPrice = JSON.parse(localStorage.getItem("subtotal"))
+      dineIn = JSON.parse(localStorage.getItem("dineIn"))
+    } catch (e) {
+      console.error("Failed to read order data from localStorage:", e)
+      return
+    }
+
+    if (!cartItems) {
+      console.error("No cart data found in localStorage")
+      return
+    }
 
     setDineIn(dineIn)
     setCartPrice(cartPrice)
@@ -31,7 +42,11 @@ const PaymentSuccess = () => {
     console.log(cartItems)
 
     const sendOrder = async() => {
-      const order = { 
+      if (sessionStorage.getItem('orderSent')) {
+        return
+      }
+
+      const order = {
         "order_list": [...cartItems],
         "status": "processing",
         "mode" : dineIn ? "dine-in" : "delivery",
@@ -46,12 +61,14 @@ const PaymentSuccess = () => {
           })
           .then(res => res.json())
           .then(data => console.log(data))
-      
+
+      sessionStorage.setItem('orderSent', 'true')
+
       await fetch('/api/queue', {
         method: 'GET'
       }).then(res=> res.json())
         .then(data => setQueue(data))
-      
+
       // const queueNumber = JSON.parse(response).queue
       // console.log(response)
       // setQueue(queueNumber)
