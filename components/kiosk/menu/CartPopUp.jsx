@@ -8,7 +8,7 @@ import {
   useLocation
 } from "react-router-dom";
  
-const CartPopUp = () => {
+const CartPopUp = ({ content, handleClose }) => {
   return (
     <div className="fixed h-full w-full inset-0 bg-green-100 m-auto">
       <div className="absolute inset-1/4 m-auto rounded-t-2xl">
