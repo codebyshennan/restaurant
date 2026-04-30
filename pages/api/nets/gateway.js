@@ -32,7 +32,7 @@ const netsPortal = (req, res) => {
 
   const decodedMessage = decodeURIComponent(message)
   // if hmac and keyId (public key) match
-  res.json(decodedMessage, hmac, KeyId)
+  res.json({ decodedMessage, hmac, KeyId })
 
   // redirect back after decoding and ensuring compliance
   // print receipt
