@@ -74,7 +74,7 @@ const Terminal = () => {
     .then(res => res.json())
     .then(data => {
       log(JSON.stringify(data.status))
-      return JSON.stringify(data)
+      return data
     })
   }
 
