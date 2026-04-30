@@ -5,7 +5,7 @@ const UpdateOrderItems = async (req, res) => {
   // id of order to mutate
   const data = req.body
 
-  if(req == "UPDATE") {
+  if(req.method === "PUT" || req.method === "PATCH") {
       //get the orders and paginate accordingly
     const client = await dbConnection()
     const db = client.db('fastfood')
@@ -13,7 +13,7 @@ const UpdateOrderItems = async (req, res) => {
     const filter = { _id: data._id}
     const updateDoc = {
       $set: {
-        "ingredients.$[]" : value
+        "ingredients.$[]" : data.value
       }
     }
     res.status(200).send(ordersData)
