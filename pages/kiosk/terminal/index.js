@@ -95,7 +95,7 @@ const Terminal = () => {
         } else if (processingPayment.paymentIntent) {
             const paymentIntentId = processingPayment.paymentIntent.id;
             log("Parsing payment intent...");
-            const status = capture(paymentIntentId)
+            const status = await capture(paymentIntentId)
             return status
         }
       };
