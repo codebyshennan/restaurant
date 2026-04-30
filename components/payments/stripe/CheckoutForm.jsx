@@ -62,7 +62,7 @@ export default function CheckoutForm() {
       confirmParams: {
         // Make sure to change this to your payment completion page
         // paymentIntent result will be appended to the end of the url
-        return_url: "http://localhost:3000/kiosk/grabpay/hook",
+        return_url: `${process.env.APP_DOMAIN || 'http://localhost:3000'}/kiosk/grabpay/hook`,
       },
     });
 
