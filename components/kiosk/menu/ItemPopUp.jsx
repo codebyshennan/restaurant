@@ -15,7 +15,7 @@ const style = {
   p: 4,
 };
 
-function ItemPopUp(item, currentCost, handleOpen) {
+function ItemPopUp({ item, currentCost, handleOpen }) {
   console.log(item.item)
   console.log(item.currentCost)
   const sideItem = item.item
