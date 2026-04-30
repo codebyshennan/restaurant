@@ -19,7 +19,7 @@ import Typography from '@mui/material/Typography'
 function SideRequest() {
   let location = useLocation()
   const orderedMeal = location.itemProp.itemMeal
-  const [menuItems] = useContext(MenuContext)
+  const menuItems = useContext(MenuContext)
   const [sidePrice, setSidePrice] = useState(0.00)
   const [drinkPrice, setDrinkPrice] = useState(0.00)
   const [category, setCategory] = useState('meal')
