@@ -17,7 +17,8 @@ export const PaymentMode = (props) => {
 
   const handleCashPayment = (ev) => {
     ev.preventDefault()
-    const redirectURL = `http://localhost:3000/kiosk/payment_success?paymentIntent=null&paymentMethod=cash`
+    const baseUrl = process.env.APP_DOMAIN || 'http://localhost:3000'
+    const redirectURL = `${baseUrl}/kiosk/payment_success?paymentIntent=null&paymentMethod=cash`
     router.push(redirectURL)
   }
 
