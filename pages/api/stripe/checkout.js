@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.NEXT_PUBLIC_STRIPE_LIVE_SECRET);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 // console.log(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY)
 const handler = async (req, res) => {
   const { amount } = req.body
