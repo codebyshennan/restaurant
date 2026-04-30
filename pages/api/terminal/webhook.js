@@ -1,12 +1,41 @@
 
-import React from 'react'
-const stripe = require('stripe')(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY)
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
-const webhook = (req, res) => {
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
+
+const getRawBody = (req) =>
+  new Promise((resolve, reject) => {
+    const chunks = []
+    req.on('data', (chunk) => chunks.push(chunk))
+    req.on('end', () => resolve(Buffer.concat(chunks)))
+    req.on('error', reject)
+  })
+
+const webhook = async (req, res) => {
   const { method } = req
-  // bodyParser.raw({type: 'application/json'})
+
   if (method == "POST") {
-    const event = req.body
+    const sig = req.headers['stripe-signature']
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+    const rawBody = await getRawBody(req)
+
+    let event
+
+    if (webhookSecret) {
+      try {
+        event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret)
+      } catch (err) {
+        console.error('Webhook signature verification failed:', err.message)
+        return res.status(400).send(`Webhook Error: ${err.message}`)
+      }
+    } else {
+      console.warn('STRIPE_WEBHOOK_SECRET is not set — skipping signature verification (dev fallback)')
+      event = JSON.parse(rawBody.toString())
+    }
 
     // Handle the event
     switch (event.type) {
@@ -22,14 +51,6 @@ const webhook = (req, res) => {
       default:
         console.log(`Unhandled event type ${event.type}`);
     }
-
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST')
-    res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Authorization, Accept-Version, X-User-Email, X-Auth-Token, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    )
 
     // Return a 200 response to acknowledge receipt of the event
     res.json({received: true});
