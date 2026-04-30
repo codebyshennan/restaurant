@@ -12,8 +12,8 @@ const CartPopUp = ({ content, handleClose }) => {
   return (
     <div className="fixed h-full w-full inset-0 bg-green-100 m-auto">
       <div className="absolute inset-1/4 m-auto rounded-t-2xl">
-        {props.content}
-        <span className="close-icon" onClick={props.handleClose}>Back To Menu</span>
+        {content}
+        <span className="close-icon" onClick={handleClose}>Back To Menu</span>
       </div>
     </div>
   );
